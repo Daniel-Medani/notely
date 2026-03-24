@@ -1,0 +1,64 @@
+# Project State
+
+## Project Reference
+
+See: .planning/PROJECT.md (updated 2026-03-24)
+
+**Core value:** Users can create, organize, and find their content in a block-based editor with nested pages — fast, reliable, and free to run.
+**Current focus:** Phase 1 — Foundation
+
+## Current Position
+
+Phase: 1 of 7 (Foundation)
+Plan: 0 of ? in current phase
+Status: Ready to plan
+Last activity: 2026-03-24 — Roadmap created; ready to begin Phase 1 planning
+
+Progress: [░░░░░░░░░░] 0%
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed: 0
+- Average duration: —
+- Total execution time: 0 hours
+
+**By Phase:**
+
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
+
+**Recent Trend:**
+- Last 5 plans: —
+- Trend: —
+
+*Updated after each plan completion*
+
+## Accumulated Context
+
+### Decisions
+
+Decisions are logged in PROJECT.md Key Decisions table.
+Recent decisions affecting current work:
+
+- [Pre-Phase 1]: Use Better Auth (not next-auth v5) — next-auth v5 is perpetually beta, Better Auth has first-class Prisma adapter + org primitives
+- [Pre-Phase 1]: Next.js 16 uses `proxy.ts` / `export function proxy()` — NOT `middleware.ts`
+- [Pre-Phase 1]: Use `strategy: "jwt"` — database sessions break Edge runtime
+- [Pre-Phase 1]: Use `@prisma/adapter-neon` WebSocket driver — required on Vercel serverless to prevent connection exhaustion
+- [Pre-Phase 1]: Page tree ordering uses `Float` fractional indexing — changing to integer later requires a data migration
+
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+- [Phase 3]: TipTap v3 DragHandle and Slash Commands extension API surface needs verification before implementation — consider `/gsd:research-phase` before Phase 3 planning
+- [Pre-Phase 1]: Better Auth org slug uniqueness/edge-case behavior needs confirmation against source before writing org creation flow
+
+## Session Continuity
+
+Last session: 2026-03-24
+Stopped at: Roadmap created and written to .planning/ROADMAP.md
+Resume file: None

@@ -141,70 +141,70 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01 | — | Pending |
-| AUTH-02 | — | Pending |
-| AUTH-03 | — | Pending |
-| AUTH-04 | — | Pending |
-| AUTH-05 | — | Pending |
-| AUTH-06 | — | Pending |
-| PAGE-01 | — | Pending |
-| PAGE-02 | — | Pending |
-| PAGE-03 | — | Pending |
-| PAGE-04 | — | Pending |
-| PAGE-05 | — | Pending |
-| PAGE-06 | — | Pending |
-| PAGE-07 | — | Pending |
-| PAGE-08 | — | Pending |
-| PAGE-09 | — | Pending |
-| PAGE-10 | — | Pending |
-| EDIT-01 | — | Pending |
-| EDIT-02 | — | Pending |
-| EDIT-03 | — | Pending |
-| EDIT-04 | — | Pending |
-| EDIT-05 | — | Pending |
-| EDIT-06 | — | Pending |
-| EDIT-07 | — | Pending |
-| EDIT-08 | — | Pending |
-| EDIT-09 | — | Pending |
-| EDIT-10 | — | Pending |
-| SRCH-01 | — | Pending |
-| SRCH-02 | — | Pending |
-| SRCH-03 | — | Pending |
-| TRSH-01 | — | Pending |
-| TRSH-02 | — | Pending |
-| TRSH-03 | — | Pending |
-| TRSH-04 | — | Pending |
-| ORG-01 | — | Pending |
-| ORG-02 | — | Pending |
-| ORG-03 | — | Pending |
-| ORG-04 | — | Pending |
-| ORG-05 | — | Pending |
-| ORG-06 | — | Pending |
-| ORG-07 | — | Pending |
-| ORG-08 | — | Pending |
-| TNNT-01 | — | Pending |
-| TNNT-02 | — | Pending |
-| TNNT-03 | — | Pending |
-| TNNT-04 | — | Pending |
-| SEC-01 | — | Pending |
-| SEC-02 | — | Pending |
-| SEC-03 | — | Pending |
-| SEC-04 | — | Pending |
-| SEC-05 | — | Pending |
-| SEC-06 | — | Pending |
-| THEME-01 | — | Pending |
-| THEME-02 | — | Pending |
-| CICD-01 | — | Pending |
-| CICD-02 | — | Pending |
-| CICD-03 | — | Pending |
-| CICD-04 | — | Pending |
-| CICD-05 | — | Pending |
+| AUTH-01 | Phase 1 | Pending |
+| AUTH-02 | Phase 1 | Pending |
+| AUTH-03 | Phase 1 | Pending |
+| AUTH-04 | Phase 1 | Pending |
+| AUTH-05 | Phase 1 | Pending |
+| AUTH-06 | Phase 1 | Pending |
+| PAGE-01 | Phase 2 | Pending |
+| PAGE-02 | Phase 2 | Pending |
+| PAGE-03 | Phase 2 | Pending |
+| PAGE-04 | Phase 2 | Pending |
+| PAGE-05 | Phase 2 | Pending |
+| PAGE-06 | Phase 2 | Pending |
+| PAGE-07 | Phase 2 | Pending |
+| PAGE-08 | Phase 2 | Pending |
+| PAGE-09 | Phase 2 | Pending |
+| PAGE-10 | Phase 2 | Pending |
+| EDIT-01 | Phase 3 | Pending |
+| EDIT-02 | Phase 3 | Pending |
+| EDIT-03 | Phase 3 | Pending |
+| EDIT-04 | Phase 3 | Pending |
+| EDIT-05 | Phase 3 | Pending |
+| EDIT-06 | Phase 3 | Pending |
+| EDIT-07 | Phase 3 | Pending |
+| EDIT-08 | Phase 3 | Pending |
+| EDIT-09 | Phase 3 | Pending |
+| EDIT-10 | Phase 3 | Pending |
+| SRCH-01 | Phase 4 | Pending |
+| SRCH-02 | Phase 4 | Pending |
+| SRCH-03 | Phase 4 | Pending |
+| TRSH-01 | Phase 6 | Pending |
+| TRSH-02 | Phase 6 | Pending |
+| TRSH-03 | Phase 6 | Pending |
+| TRSH-04 | Phase 6 | Pending |
+| ORG-01 | Phase 5 | Pending |
+| ORG-02 | Phase 5 | Pending |
+| ORG-03 | Phase 5 | Pending |
+| ORG-04 | Phase 5 | Pending |
+| ORG-05 | Phase 5 | Pending |
+| ORG-06 | Phase 5 | Pending |
+| ORG-07 | Phase 5 | Pending |
+| ORG-08 | Phase 5 | Pending |
+| TNNT-01 | Phase 1 | Pending |
+| TNNT-02 | Phase 1 | Pending |
+| TNNT-03 | Phase 1 | Pending |
+| TNNT-04 | Phase 1 | Pending |
+| SEC-01 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Pending |
+| SEC-03 | Phase 7 | Pending |
+| SEC-04 | Phase 1 | Pending |
+| SEC-05 | Phase 1 | Pending |
+| SEC-06 | Phase 1 | Pending |
+| THEME-01 | Phase 7 | Pending |
+| THEME-02 | Phase 7 | Pending |
+| CICD-01 | Phase 1 | Pending |
+| CICD-02 | Phase 1 | Pending |
+| CICD-03 | Phase 7 | Pending |
+| CICD-04 | Phase 7 | Pending |
+| CICD-05 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 53 total
-- Mapped to phases: 0
-- Unmapped: 53 ⚠️
+- v1 requirements: 58 total
+- Mapped to phases: 58
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-24*
-*Last updated: 2026-03-24 after initial definition*
+*Last updated: 2026-03-24 after roadmap creation — all 58 requirements mapped*
