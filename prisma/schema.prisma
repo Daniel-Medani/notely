@@ -89,3 +89,20 @@ model Invitation {
   inviterId      String
   createdAt      DateTime @default(now())
 }
+
+model Page {
+  id             String   @id @default(cuid())
+  organizationId String
+  title          String   @default("Untitled")
+  emoji          String?
+  content        Json?
+  order          Float
+  isDeleted      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  parentId       String?
+  parent         Page?    @relation("PageChildren", fields: [parentId], references: [id])
+  children       Page[]   @relation("PageChildren")
+
+  @@index([organizationId, isDeleted, order])
+}
