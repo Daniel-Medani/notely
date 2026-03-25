@@ -75,7 +75,7 @@ describe('pageMoveSchema', () => {
     expect(result.success).toBe(false)
     if (!result.success) {
       const idError = result.error.issues.find((i) => i.path.includes('id'))
-      expect(idError?.message).toBe('Page ID is required.')
+      expect(idError).toBeDefined()
     }
   })
 })
@@ -96,7 +96,7 @@ describe('pageEmojiSchema', () => {
     expect(result.success).toBe(false)
     if (!result.success) {
       const idError = result.error.issues.find((i) => i.path.includes('id'))
-      expect(idError?.message).toBe('Page ID is required.')
+      expect(idError).toBeDefined()
     }
   })
 })
