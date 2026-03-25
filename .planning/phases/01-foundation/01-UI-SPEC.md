@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: new-york
 created: 2026-03-25
+revised: 2026-03-25
 ---
 
 # Phase 1 — UI Design Contract
@@ -61,15 +62,17 @@ Exceptions:
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body | 14px | 400 (regular) | 1.5 |
-| Label | 14px | 500 (medium) | 1.4 |
+| Label | 14px | 600 (semibold) | 1.4 |
 | Heading | 20px | 600 (semibold) | 1.2 |
-| Display | 28px | 700 (bold) | 1.15 |
+| Display | 28px | 600 (semibold) | 1.15 |
+
+**Declared weights: 2 total — 400 (regular) and 600 (semibold).**
 
 **Notes:**
 - Body (14px/400/1.5) is used for: form input placeholder text, helper text, error messages, sidebar nav items, empty state body copy
-- Label (14px/500/1.4) is used for: form field labels, section headers in sidebar ("Pages")
+- Label (14px/600/1.4) is used for: form field labels, section headers in sidebar ("Pages")
 - Heading (20px/600/1.2) is used for: auth card title ("Sign in to Notely", "Create your account"), workspace empty-state heading ("Welcome to Notely")
-- Display (28px/700/1.15) is used for: "Notely" brand text in auth pages only (D-04)
+- Display (28px/600/1.15) is used for: "Notely" brand text in auth pages only (D-04)
 - Font family: Inter via `next/font/google` loaded in root layout, set as `--font-sans` CSS variable
 
 **Source:** Claude's Discretion (CONTEXT.md); shadcn/ui new-york defaults inform sizing
@@ -168,6 +171,12 @@ No additional components for Phase 1.
 - Managed by React Hook Form `<FormMessage>` component
 - Server-side auth errors (wrong password, email taken) appear below the email field or as a card-level message above the submit button
 
+### Sidebar Toggle Button — D-11
+
+- The sidebar toggle button is icon-only (no visible label).
+- Must declare `aria-label="Toggle sidebar"` on the `<Button>` element to satisfy WCAG 4.1.2 Name, Role, Value.
+- Icon: `<PanelLeft />` from lucide-react (or `<PanelRight />` when sidebar is collapsed).
+
 ### Sign-out — Claude's Discretion
 
 - Direct sign-out: no confirmation dialog. Click "Sign out" in user menu → immediate `authClient.signOut()` → redirect to `/login`.
@@ -201,23 +210,23 @@ No additional components for Phase 1.
 
 ## Copywriting Contract
 
-| Element | Copy |
-|---------|------|
-| Primary CTA (sign-in) | "Sign in" |
-| Primary CTA (sign-up) | "Create account" |
-| Primary CTA (workspace) | "New Page" |
-| Google OAuth button | "Continue with Google" |
-| Auth card title (login) | "Sign in to Notely" |
-| Auth card title (register) | "Create your account" |
-| Empty state heading | "Welcome to Notely" |
-| Empty state body | "Create your first page to get started." |
-| Sign-in cross-link | "Don't have an account? Create one" |
-| Sign-up cross-link | "Already have an account? Sign in" |
-| Sidebar pages section header | "Pages" |
-| Sidebar pages empty state | "No pages yet." |
-| User menu sign-out item | "Sign out" |
-| Loading (sign-in) | "Signing in..." |
-| Loading (sign-up) | "Creating account..." |
+| Element | Copy | Pattern Note |
+|---------|------|--------------|
+| Primary CTA (sign-in) | "Sign in" | Intentional domain-standard exception to verb+noun rule — "Sign in" is the universal convention for authentication entry; adding a noun ("Sign in to account") would be unnatural. |
+| Primary CTA (sign-up) | "Create account" | Follows verb+noun pattern. |
+| Primary CTA (workspace) | "New Page" | Intentional domain-standard exception to verb+noun rule — Notion, Linear, and similar tools use noun-first labels for creation actions in content contexts; "Create Page" would be grammatically correct but deviates from established user expectation in this domain. |
+| Google OAuth button | "Continue with Google" | Follows verb+noun pattern. |
+| Auth card title (login) | "Sign in to Notely" | Page heading, not a CTA. |
+| Auth card title (register) | "Create your account" | Page heading, not a CTA. |
+| Empty state heading | "Welcome to Notely" | Heading, not a CTA. |
+| Empty state body | "Create your first page to get started." | Body copy, not a CTA. |
+| Sign-in cross-link | "Don't have an account? Create one" | Inline link, not a primary CTA. |
+| Sign-up cross-link | "Already have an account? Sign in" | Inline link, not a primary CTA. |
+| Sidebar pages section header | "Pages" | Section label, not a CTA. |
+| Sidebar pages empty state | "No pages yet." | Status copy, not a CTA. |
+| User menu sign-out item | "Sign out" | Menu item convention; imperative verb form is standard for menu actions. |
+| Loading (sign-in) | "Signing in..." | Progressive form during loading state. |
+| Loading (sign-up) | "Creating account..." | Progressive form during loading state. |
 
 No destructive actions in Phase 1. Sign-out is non-destructive (session is ephemeral).
 
