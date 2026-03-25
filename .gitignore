@@ -46,3 +46,8 @@ next-env.d.ts
 
 # prisma generated
 src/generated/
+
+# local development / AI tooling
+.claude/
+.planning/
+CLAUDE.md
