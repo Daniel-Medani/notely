@@ -68,7 +68,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Tenant Isolation
 
-- [ ] **TNNT-01**: Every database table includes an `organizationId` foreign key
+- [x] **TNNT-01**: Every database table includes an `organizationId` foreign key
 - [ ] **TNNT-02**: All queries are scoped to the current organization (no cross-tenant data access)
 - [ ] **TNNT-03**: Tenant is resolved via path-based routing (`/[org]/...`)
 - [ ] **TNNT-04**: Repository interfaces require `organizationId` as a parameter on all methods
@@ -76,9 +76,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Security
 
 - [ ] **SEC-01**: All user input is validated server-side with Zod before touching the database
-- [ ] **SEC-02**: All database queries go through Prisma (no raw SQL with user input)
+- [x] **SEC-02**: All database queries go through Prisma (no raw SQL with user input)
 - [ ] **SEC-03**: Auth and write endpoints are rate-limited (Upstash Redis)
-- [ ] **SEC-04**: No secrets are exposed in client bundles
+- [x] **SEC-04**: No secrets are exposed in client bundles
 - [ ] **SEC-05**: Server Actions are wrapped with authentication and authorization checks
 - [ ] **SEC-06**: API layer returns consistent error shapes without leaking stack traces
 
@@ -89,8 +89,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### CI/CD
 
-- [ ] **CICD-01**: GitHub Actions runs ESLint + Prettier check on every PR
-- [ ] **CICD-02**: GitHub Actions runs TypeScript type check on every PR
+- [x] **CICD-01**: GitHub Actions runs ESLint + Prettier check on every PR
+- [x] **CICD-02**: GitHub Actions runs TypeScript type check on every PR
 - [ ] **CICD-03**: GitHub Actions runs Vitest unit and integration tests on every PR
 - [ ] **CICD-04**: GitHub Actions runs Playwright E2E tests on every PR
 - [ ] **CICD-05**: All checks must pass before merge to development and main
@@ -182,20 +182,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ORG-06 | Phase 5 | Pending |
 | ORG-07 | Phase 5 | Pending |
 | ORG-08 | Phase 5 | Pending |
-| TNNT-01 | Phase 1 | Pending |
+| TNNT-01 | Phase 1 | Complete |
 | TNNT-02 | Phase 1 | Pending |
 | TNNT-03 | Phase 1 | Pending |
 | TNNT-04 | Phase 1 | Pending |
 | SEC-01 | Phase 1 | Pending |
-| SEC-02 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Complete |
 | SEC-03 | Phase 7 | Pending |
-| SEC-04 | Phase 1 | Pending |
+| SEC-04 | Phase 1 | Complete |
 | SEC-05 | Phase 1 | Pending |
 | SEC-06 | Phase 1 | Pending |
 | THEME-01 | Phase 7 | Pending |
 | THEME-02 | Phase 7 | Pending |
-| CICD-01 | Phase 1 | Pending |
-| CICD-02 | Phase 1 | Pending |
+| CICD-01 | Phase 1 | Complete |
+| CICD-02 | Phase 1 | Complete |
 | CICD-03 | Phase 7 | Pending |
 | CICD-04 | Phase 7 | Pending |
 | CICD-05 | Phase 7 | Pending |

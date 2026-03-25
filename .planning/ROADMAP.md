@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 5 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffolding, Prisma schema, CI workflow, test configs
+- [x] 01-01-PLAN.md — Project scaffolding, Prisma schema, CI workflow, test configs
 - [ ] 01-02-PLAN.md — Auth backend: Better Auth, Prisma client, DAL, proxy.ts, Zod schemas
 - [ ] 01-03-PLAN.md — Auth UI: sign-in and sign-up pages with forms
 - [ ] 01-04-PLAN.md — Tenant resolution, workspace shell, sidebar, repository interfaces
