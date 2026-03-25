@@ -12,7 +12,7 @@ Notely is built in seven phases that follow a strict dependency chain: authentic
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Authentication, tenant isolation, and architecture patterns that every subsequent phase depends on
+- [x] **Phase 1: Foundation** - Authentication, tenant isolation, and architecture patterns that every subsequent phase depends on (completed 2026-03-25)
 - [ ] **Phase 2: Page Tree** - Hierarchical page management with an optimistic sidebar and breadcrumb navigation
 - [ ] **Phase 3: Block Editor** - Full TipTap block editor with auto-save, slash commands, and drag-and-drop reordering
 - [ ] **Phase 4: Search** - Full-text search across all pages in the current organization via PostgreSQL FTS
@@ -32,14 +32,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A personal organization is automatically created for every new user with that user as Admin — no setup required
   4. Navigating to any route without a session redirects to the sign-in page; no unauthenticated data is accessible
   5. All database tables include an `organizationId` foreign key and all queries are path-scoped to the current org — no cross-tenant data is accessible
-**Plans:** 3/5 plans executed
+**Plans:** 5/5 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md — Project scaffolding, Prisma schema, CI workflow, test configs
 - [x] 01-02-PLAN.md — Auth backend: Better Auth, Prisma client, DAL, proxy.ts, Zod schemas
 - [x] 01-03-PLAN.md — Auth UI: sign-in and sign-up pages with forms
-- [ ] 01-04-PLAN.md — Tenant resolution, workspace shell, sidebar, repository interfaces
-- [ ] 01-05-PLAN.md — Root layout providers, schema tests, visual verification checkpoint
+- [x] 01-04-PLAN.md — Tenant resolution, workspace shell, sidebar, repository interfaces
+- [x] 01-05-PLAN.md — Root layout providers, schema tests, visual verification checkpoint
 
 **UI hint**: yes
 
@@ -125,7 +125,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 3/5 | In Progress|  |
+| 1. Foundation | 5/5 | Complete   | 2026-03-25 |
 | 2. Page Tree | 0/? | Not started | - |
 | 3. Block Editor | 0/? | Not started | - |
 | 4. Search | 0/? | Not started | - |

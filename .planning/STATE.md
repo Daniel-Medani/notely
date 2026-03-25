@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 01-foundation-01-03-PLAN.md
-last_updated: "2026-03-25T04:05:54.166Z"
+stopped_at: "Checkpoint reached: 01-05 Task 2 human-verify (visual auth flow verification pending)"
+last_updated: "2026-03-25T20:53:39.134Z"
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 5
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 01 (foundation) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 
 ## Performance Metrics
 
@@ -49,6 +49,8 @@ Plan: 4 of 5
 | Phase 01-foundation P01 | 9 | 3 tasks | 27 files |
 | Phase 01-foundation P02 | 5 | 2 tasks | 8 files |
 | Phase 01-foundation P03 | 3 | 2 tasks | 5 files |
+| Phase 01-foundation P04 | 3 | 2 tasks | 7 files |
+| Phase 01-foundation P05 | 15 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -70,6 +72,11 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: ActionResult<T> discriminated union enforces consistent error shapes across all Server Actions (SEC-06)
 - [Phase 01-foundation]: Google SVG icon inlined in auth forms - lucide-react v1 removed brand icons, inline SVG is correct approach
 - [Phase 01-foundation]: Auth form pattern established: 'use client' + useForm(zodResolver) + authClient call + isLoading state
+- [Phase 01-foundation]: WorkspaceLayout is 'use client' to hold sidebar collapse state and pass session props to client Sidebar; server session data passed as props from WorkspacePage Server Component
+- [Phase 01-foundation]: IRepository<T> interface requires organizationId on all 5 CRUD methods — no implicit org context anywhere in data layer
+- [Phase 01-foundation]: New Page CTA is non-functional stub in Phase 1 — wired to page creation in Phase 2
+- [Phase 01-foundation]: Root layout provider chain: ThemeProvider wraps children and Toaster — Phase 7 dark mode needs no layout changes
+- [Phase 01-foundation]: Schema test pattern: safeParse + issues.find() locates per-field error messages in Vitest unit tests
 
 ### Pending Todos
 
@@ -82,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T04:05:54.159Z
-Stopped at: Completed 01-foundation-01-03-PLAN.md
+Last session: 2026-03-25T20:53:39.127Z
+Stopped at: Checkpoint reached: 01-05 Task 2 human-verify (visual auth flow verification pending)
 Resume file: None
