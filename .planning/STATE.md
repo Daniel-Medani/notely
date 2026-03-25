@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 01-foundation-01-01-PLAN.md
-last_updated: "2026-03-25T03:53:19.868Z"
+stopped_at: Completed 01-foundation-01-03-PLAN.md
+last_updated: "2026-03-25T04:05:54.166Z"
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
+  completed_plans: 3
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 01 (foundation) — EXECUTING
-Plan: 2 of 5
+Plan: 4 of 5
 
 ## Performance Metrics
 
@@ -47,6 +47,8 @@ Plan: 2 of 5
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 9 | 3 tasks | 27 files |
+| Phase 01-foundation P02 | 5 | 2 tasks | 8 files |
+| Phase 01-foundation P03 | 3 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -63,6 +65,11 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Prisma 7.5.0 schema.prisma has no url/directUrl — moved to prisma.config.ts datasource.url per Prisma 7 API
 - [Phase 01-foundation]: prisma.config.ts migrate.adapter not in Prisma 7 PrismaConfig type — adapter passed to PrismaClient constructor at runtime via @prisma/adapter-neon
 - [Phase 01-foundation]: shadcn/ui CLI init is interactive only — automated via manual components.json creation + shadcn add --yes
+- [Phase 01-foundation]: Direct Prisma insert in databaseHooks.user.create.after for org creation — avoids Better Auth permission-check bugs in <= 1.5.x
+- [Phase 01-foundation]: Dual-layer route protection: proxy.ts for optimistic cookie check, verifySession() as authoritative server-side gate
+- [Phase 01-foundation]: ActionResult<T> discriminated union enforces consistent error shapes across all Server Actions (SEC-06)
+- [Phase 01-foundation]: Google SVG icon inlined in auth forms - lucide-react v1 removed brand icons, inline SVG is correct approach
+- [Phase 01-foundation]: Auth form pattern established: 'use client' + useForm(zodResolver) + authClient call + isLoading state
 
 ### Pending Todos
 
@@ -75,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T03:53:19.863Z
-Stopped at: Completed 01-foundation-01-01-PLAN.md
+Last session: 2026-03-25T04:05:54.159Z
+Stopped at: Completed 01-foundation-01-03-PLAN.md
 Resume file: None
