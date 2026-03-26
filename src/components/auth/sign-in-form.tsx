@@ -22,9 +22,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-export function SignInForm() {
+export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+
+  // Security: only allow relative paths to prevent open redirect
+  const redirectTo = callbackUrl && callbackUrl.startsWith('/') ? callbackUrl : '/dashboard'
 
   const form = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
@@ -40,7 +43,7 @@ export function SignInForm() {
       const result = await authClient.signIn.email({
         email: data.email,
         password: data.password,
-        callbackURL: '/dashboard',
+        callbackURL: redirectTo,
       })
 
       if (result.error) {
@@ -50,7 +53,7 @@ export function SignInForm() {
         return
       }
 
-      router.push('/dashboard')
+      router.push(redirectTo)
     } catch {
       form.setError('root', {
         message: 'Something went wrong. Please try again.',
@@ -61,7 +64,7 @@ export function SignInForm() {
   }
 
   async function handleGoogleSignIn() {
-    await authClient.signIn.social({ provider: 'google', callbackURL: '/dashboard' })
+    await authClient.signIn.social({ provider: 'google', callbackURL: redirectTo })
   }
 
   return (
