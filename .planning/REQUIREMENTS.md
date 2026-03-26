@@ -64,7 +64,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **ORG-05**: Organization has two roles: Admin and Member
 - [x] **ORG-06**: Admin can change a member's role
 - [x] **ORG-07**: All members can view all pages within the organization (org-level access)
-- [ ] **ORG-08**: User can switch between organizations they belong to
+- [x] **ORG-08**: User can switch between organizations they belong to
 
 ### Tenant Isolation
 
@@ -181,7 +181,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ORG-05 | Phase 5 | Complete |
 | ORG-06 | Phase 5 | Complete |
 | ORG-07 | Phase 5 | Complete |
-| ORG-08 | Phase 5 | Pending |
+| ORG-08 | Phase 5 | Complete |
 | TNNT-01 | Phase 1 | Complete |
 | TNNT-02 | Phase 1 | Complete |
 | TNNT-03 | Phase 1 | Complete |

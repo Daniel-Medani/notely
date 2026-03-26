@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 05-org-management 05-01-PLAN.md
-last_updated: "2026-03-26T15:19:15.000Z"
+stopped_at: Completed 05-org-management 05-02-PLAN.md
+last_updated: "2026-03-26T15:23:39.093Z"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 18
-  completed_plans: 15
+  completed_plans: 16
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 05 (org-management) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Plan: 2 of 4
 | Phase 04-search P01 | 6 | 2 tasks | 13 files |
 | Phase 04-search P02 | 45 | 2 tasks | 2 files |
 | Phase 05-org-management P01 | 5 | 2 tasks | 11 files |
+| Phase 05-org-management P02 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -113,6 +114,8 @@ Recent decisions affecting current work:
 - [Phase 04-search]: Cmd+K listener in Sidebar (not SearchPalette) — SearchPalette is controlled component with open/onOpenChange props; useDebouncedCallback cancel() called on close
 - [Phase 05-org-management]: Separate prisma queries for invitation lookups — Invitation model has no @relation in schema.prisma
 - [Phase 05-org-management]: Mock next/headers in vitest for Server Action tests — headers() throws outside request scope; vi.mock('next/headers') required pattern
+- [Phase 05-org-management]: Org list passed as props from layout (not fetched client-side) — avoids loading flash; layout already does server-side auth
+- [Phase 05-org-management]: OrgSwitcher owns both popoverOpen and createDialogOpen state, closes popover before opening dialog to avoid layering issues
 
 ### Pending Todos
 
@@ -125,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T15:19:14.998Z
-Stopped at: Completed 05-org-management 05-01-PLAN.md
+Last session: 2026-03-26T15:23:39.089Z
+Stopped at: Completed 05-org-management 05-02-PLAN.md
 Resume file: None
