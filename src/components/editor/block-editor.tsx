@@ -8,7 +8,7 @@ import { Image } from '@tiptap/extension-image'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { createLowlight, common } from 'lowlight'
 import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
-import { useRef, useTransition, useCallback, useEffect } from 'react'
+import { useRef, useTransition, useCallback, useEffect, useState } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { useWorkspace } from '@/components/workspace/workspace-layout'
 import { updatePageContentAction } from '@/lib/actions/page-actions'
@@ -28,14 +28,9 @@ interface BlockEditorProps {
 export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
   const { organizationId } = useWorkspace()
   const [isPending, startTransition] = useTransition()
+  const [showImageInput, setShowImageInput] = useState(false)
+  const imageInputRef = useRef<HTMLInputElement>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  // Cleanup debounce timer on unmount (Pitfall 5: autosave firing after unmount)
-  useEffect(() => {
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current)
-    }
-  }, [])
 
   const handleUpdate = useCallback(
     ({ editor }: { editor: any }) => {
@@ -162,6 +157,28 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
     onUpdate: handleUpdate,
   })
 
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [])
+
+  // Listen for image insert requests from the slash command extension
+  useEffect(() => {
+    if (!editor) return
+    const dom = editor.view.dom
+    const handler = () => setShowImageInput(true)
+    dom.addEventListener('tiptap:image-insert', handler)
+    return () => dom.removeEventListener('tiptap:image-insert', handler)
+  }, [editor])
+
+  const submitImageUrl = () => {
+    const url = imageInputRef.current?.value.trim()
+    if (url) editor?.chain().focus().setImage({ src: url }).run()
+    setShowImageInput(false)
+  }
+
   return (
     <div
       className="px-16 py-8 relative min-h-[calc(100vh-120px)] cursor-text"
@@ -174,6 +191,45 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
         </div>
       )}
       <EditorContent editor={editor} />
+
+      {showImageInput && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+          onClick={() => setShowImageInput(false)}
+        >
+          <div
+            className="bg-background border rounded-lg shadow-lg p-4 w-96 flex flex-col gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-sm font-medium">Insert image</p>
+            <input
+              ref={imageInputRef}
+              autoFocus
+              type="url"
+              placeholder="https://example.com/image.png"
+              className="w-full rounded-md border bg-transparent px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') submitImageUrl()
+                if (e.key === 'Escape') setShowImageInput(false)
+              }}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="text-sm px-3 py-1.5 rounded-md border hover:bg-muted"
+                onClick={() => setShowImageInput(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="text-sm px-3 py-1.5 rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={submitImageUrl}
+              >
+                Insert
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -85,12 +85,7 @@ export const SLASH_COMMANDS: SlashCommandItem[] = [
     icon: 'Image',
     command: ({ editor, range }) => {
       editor.chain().focus().deleteRange(range).run()
-      setTimeout(() => {
-        const url = window.prompt('Paste image URL')
-        if (url) {
-          editor.chain().focus().setImage({ src: url }).run()
-        }
-      }, 50)
+      editor.view.dom.dispatchEvent(new CustomEvent('tiptap:image-insert', { bubbles: true }))
     },
   },
 ]
