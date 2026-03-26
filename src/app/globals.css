@@ -165,18 +165,34 @@
 .tiptap ul[data-type="taskList"] { @apply list-none pl-0 my-2 space-y-1; }
 .tiptap ul[data-type="taskList"] li { @apply flex items-start gap-2; }
 .tiptap ul[data-type="taskList"] li > label {
-  @apply flex items-center mt-[3px] shrink-0;
-  /* label must not be editable — TipTap sets this via JS but enforce in CSS */
+  @apply flex shrink-0 self-start pt-[3px];
   user-select: none;
 }
 .tiptap ul[data-type="taskList"] li > label input[type="checkbox"] {
-  /* Reset global * border/outline overrides that break native checkbox appearance */
-  appearance: auto;
-  -webkit-appearance: checkbox;
-  border: revert;
-  outline: revert;
-  @apply h-4 w-4 cursor-pointer;
-  accent-color: var(--color-primary);
+  /* Custom checkbox — native rendering is unreliable in dark mode */
+  appearance: none;
+  -webkit-appearance: none;
+  @apply h-4 w-4 cursor-pointer rounded-sm shrink-0;
+  border: 1.5px solid var(--border);
+  background-color: transparent;
+  position: relative;
+  transition: background-color 0.1s, border-color 0.1s;
+}
+.tiptap ul[data-type="taskList"] li > label input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+.tiptap ul[data-type="taskList"] li > label input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
 }
 .tiptap ul[data-type="taskList"] li[data-checked="true"] > div {
   @apply line-through text-muted-foreground;
