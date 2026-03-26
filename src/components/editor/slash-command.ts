@@ -84,8 +84,12 @@ export const SLASH_COMMANDS: SlashCommandItem[] = [
     aliases: ['img', 'image', 'photo'],
     icon: 'Image',
     command: ({ editor, range }) => {
-      const url = '' // Empty URL — user will edit the src attribute inline
-      editor.chain().focus().deleteRange(range).setImage({ src: url }).run()
+      const url = window.prompt('Image URL')
+      if (url) {
+        editor.chain().focus().deleteRange(range).setImage({ src: url }).run()
+      } else {
+        editor.chain().focus().deleteRange(range).run()
+      }
     },
   },
 ]
