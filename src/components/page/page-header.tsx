@@ -27,7 +27,7 @@ export function PageHeader({ pageId }: PageHeaderProps) {
   const { renamePage, updateEmoji } = usePageMutations()
   const { data: pages = [] } = useQuery<PageRecord[]>({
     queryKey: PAGES_QUERY_KEY(organizationId),
-    queryFn: fetchPagesAction,
+    queryFn: () => fetchPagesAction(organizationId),
   })
 
   const currentPage = pages.find((p) => p.id === pageId)

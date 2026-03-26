@@ -19,7 +19,11 @@ export function usePageMutations() {
   const queryKey = PAGES_QUERY_KEY(organizationId)
 
   const createPage = useMutation({
-    mutationFn: (input: { parentId?: string | null }) => createPageAction(input),
+    mutationFn: async (input: { parentId?: string | null }) => {
+      const result = await createPageAction({ organizationId, ...input })
+      if (!result.success) throw new Error(result.error)
+      return result.data
+    },
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
@@ -51,7 +55,11 @@ export function usePageMutations() {
   })
 
   const renamePage = useMutation({
-    mutationFn: (input: { id: string; title: string }) => renamePageAction(input),
+    mutationFn: async (input: { id: string; title: string }) => {
+      const result = await renamePageAction({ organizationId, ...input })
+      if (!result.success) throw new Error(result.error)
+      return result.data
+    },
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
@@ -70,7 +78,11 @@ export function usePageMutations() {
   })
 
   const deletePage = useMutation({
-    mutationFn: (input: { id: string }) => deletePageAction(input),
+    mutationFn: async (input: { id: string }) => {
+      const result = await deletePageAction({ organizationId, ...input })
+      if (!result.success) throw new Error(result.error)
+      return result.data
+    },
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
@@ -89,7 +101,11 @@ export function usePageMutations() {
   })
 
   const movePage = useMutation({
-    mutationFn: (input: { id: string; parentId: string | null }) => movePageAction(input),
+    mutationFn: async (input: { id: string; parentId: string | null }) => {
+      const result = await movePageAction({ organizationId, ...input })
+      if (!result.success) throw new Error(result.error)
+      return result.data
+    },
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
@@ -108,7 +124,11 @@ export function usePageMutations() {
   })
 
   const updateEmoji = useMutation({
-    mutationFn: (input: { id: string; emoji: string | null }) => updateEmojiAction(input),
+    mutationFn: async (input: { id: string; emoji: string | null }) => {
+      const result = await updateEmojiAction({ organizationId, ...input })
+      if (!result.success) throw new Error(result.error)
+      return result.data
+    },
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)

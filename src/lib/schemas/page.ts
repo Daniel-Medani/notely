@@ -1,25 +1,30 @@
 import { z } from 'zod'
 
 export const pageCreateSchema = z.object({
+  organizationId: z.string().min(1, 'Organization ID is required.'),
   parentId: z.string().nullable().optional(),
 })
 
 export const pageRenameSchema = z.object({
+  organizationId: z.string().min(1, 'Organization ID is required.'),
   id: z.string().min(1, 'Page ID is required.'),
   title: z.string().min(1, 'Title cannot be empty.').max(255, 'Title is too long.'),
 })
 
 export const pageMoveSchema = z.object({
+  organizationId: z.string().min(1, 'Organization ID is required.'),
   id: z.string().min(1, 'Page ID is required.'),
   parentId: z.string().nullable(),
 })
 
 export const pageEmojiSchema = z.object({
+  organizationId: z.string().min(1, 'Organization ID is required.'),
   id: z.string().min(1, 'Page ID is required.'),
   emoji: z.string().nullable(),
 })
 
 export const pageDeleteSchema = z.object({
+  organizationId: z.string().min(1, 'Organization ID is required.'),
   id: z.string().min(1, 'Page ID is required.'),
 })
 

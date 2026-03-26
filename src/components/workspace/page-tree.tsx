@@ -13,7 +13,7 @@ export function PageTree() {
   const { organizationId } = useWorkspace()
   const { data: pages = [] } = useQuery<PageRecord[]>({
     queryKey: PAGES_QUERY_KEY(organizationId),
-    queryFn: fetchPagesAction,
+    queryFn: () => fetchPagesAction(organizationId),
   })
   const mutations = usePageMutations()
   const tree = buildPageTree(pages)

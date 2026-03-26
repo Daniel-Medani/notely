@@ -48,7 +48,7 @@ export function PageTreeItem({ node, depth, mutations }: PageTreeItemProps) {
 
   const { data: allPages = [] } = useQuery<PageRecord[]>({
     queryKey: PAGES_QUERY_KEY(organizationId),
-    queryFn: fetchPagesAction,
+    queryFn: () => fetchPagesAction(organizationId),
   })
 
   // Build set of descendant ids (to exclude from move targets)
