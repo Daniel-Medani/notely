@@ -12,6 +12,7 @@ import { usePageMutations } from '@/hooks/use-page-mutations'
 import { SearchPalette } from './search-palette'
 import { OrgSwitcher } from './org-switcher'
 import { useWorkspace } from './workspace-layout'
+import { ThemeToggle } from './theme-toggle'
 
 interface SidebarProps {
   userName: string
@@ -99,6 +100,7 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
               Trash
             </Button>
           </Link>
+          <ThemeToggle />
         </div>
 
         {/* Bottom: User menu */}
