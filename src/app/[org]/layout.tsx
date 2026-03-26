@@ -1,11 +1,13 @@
 import { verifySession } from '@/lib/dal'
 import { prisma } from '@/lib/db'
 import { notFound, redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
 import { WorkspaceLayout } from '@/components/workspace/workspace-layout'
 import { PageService } from '@/services/page-service'
 import { PrismaPageRepository } from '@/repositories/prisma/prisma-page-repository'
-import { PAGES_QUERY_KEY } from '@/lib/constants'
+import { PAGES_QUERY_KEY, ORGS_QUERY_KEY } from '@/lib/constants'
+import { auth } from '@/lib/auth'
 
 const pageService = new PageService(new PrismaPageRepository())
 
@@ -36,12 +38,22 @@ export default async function OrgLayout({
 
   if (!member) redirect('/login')
 
-  // Prefetch pages for TanStack Query hydration
+  // Fetch user's org list for org switcher
+  const headersObj = await headers()
+  const orgList = await auth.api.listOrganizations({ headers: headersObj })
+
+  // Prefetch pages and orgs for TanStack Query hydration
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery({
-    queryKey: PAGES_QUERY_KEY(organization.id),
-    queryFn: () => pageService.findAllForOrg(organization.id),
-  })
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: PAGES_QUERY_KEY(organization.id),
+      queryFn: () => pageService.findAllForOrg(organization.id),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ORGS_QUERY_KEY(),
+      queryFn: () => auth.api.listOrganizations({ headers: headersObj }),
+    }),
+  ])
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -50,6 +62,8 @@ export default async function OrgLayout({
         userImage={session.user.image}
         organizationId={organization.id}
         orgSlug={org}
+        orgName={organization.name}
+        orgs={orgList.map((o) => ({ id: o.id, name: o.name, slug: o.slug }))}
       >
         {children}
       </WorkspaceLayout>

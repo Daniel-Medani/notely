@@ -21,14 +21,16 @@ interface WorkspaceLayoutProps {
   userImage?: string | null
   organizationId: string
   orgSlug: string
+  orgName: string
+  orgs: Array<{ id: string; name: string; slug: string }>
   children: React.ReactNode
 }
 
-export function WorkspaceLayout({ userName, userImage, organizationId, orgSlug, children }: WorkspaceLayoutProps) {
+export function WorkspaceLayout({ userName, userImage, organizationId, orgSlug, orgName, orgs, children }: WorkspaceLayoutProps) {
   return (
     <WorkspaceContext.Provider value={{ organizationId, orgSlug }}>
       <div className="flex h-screen overflow-hidden">
-        <Sidebar userName={userName} userImage={userImage} />
+        <Sidebar userName={userName} userImage={userImage} orgName={orgName} orgs={orgs} />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </WorkspaceContext.Provider>

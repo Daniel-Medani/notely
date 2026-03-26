@@ -8,13 +8,16 @@ import { UserMenu } from './user-menu'
 import { PageTree } from './page-tree'
 import { usePageMutations } from '@/hooks/use-page-mutations'
 import { SearchPalette } from './search-palette'
+import { OrgSwitcher } from './org-switcher'
 
 interface SidebarProps {
   userName: string
   userImage?: string | null
+  orgName: string
+  orgs: Array<{ id: string; name: string; slug: string }>
 }
 
-export function Sidebar({ userName, userImage }: SidebarProps) {
+export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const { createPage } = usePageMutations()
@@ -37,10 +40,8 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
           collapsed ? 'w-0 overflow-hidden' : 'w-64'
         }`}
       >
-        {/* Top: Brand */}
-        <div className="flex h-12 items-center px-4">
-          <span className="text-sm font-semibold">Notely</span>
-        </div>
+        {/* Top: Org Switcher */}
+        <OrgSwitcher currentOrgName={orgName} orgs={orgs} />
 
         {/* Search button */}
         <div className="px-2 py-1">
