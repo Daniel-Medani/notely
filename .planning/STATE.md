@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 06-trash-01-PLAN.md
-last_updated: "2026-03-26T18:58:34.472Z"
+stopped_at: Completed 06-trash-02-PLAN.md
+last_updated: "2026-03-26T19:03:07.252Z"
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 21
-  completed_plans: 19
+  completed_plans: 20
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 06 (trash) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Plan: 2 of 3
 | Phase 05-org-management P03 | 2 | 2 tasks | 4 files |
 | Phase 05-org-management P04 | 30 | 2 tasks | 5 files |
 | Phase 06-trash P01 | 10 | 2 tasks | 4 files |
+| Phase 06-trash P02 | 2 | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -127,6 +128,8 @@ Recent decisions affecting current work:
 - [Phase 06-trash]: deletePage now calls softDeleteMany (BFS cascade) instead of update(isDeleted:true)
 - [Phase 06-trash]: restorePage re-parents to root when parent is in trash (D-09) — checked via repo.findById on parentId
 - [Phase 06-trash]: collectDescendantIds is a private BFS utility on PageService used by deletePage, restorePage, permanentlyDeletePage
+- [Phase 06-trash]: fetchTrashedPagesAction returns PageRecord[] directly (not ActionResult) — read action consumed by Server Component, not mutation handler
+- [Phase 06-trash]: restorePageAction dual revalidatePath: /[org] layout (sidebar) + /[org]/trash page — both views need refresh after restore
 
 ### Pending Todos
 
@@ -139,6 +142,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T18:58:34.469Z
-Stopped at: Completed 06-trash-01-PLAN.md
+Last session: 2026-03-26T19:03:07.249Z
+Stopped at: Completed 06-trash-02-PLAN.md
 Resume file: None
