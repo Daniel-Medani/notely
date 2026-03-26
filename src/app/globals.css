@@ -164,6 +164,12 @@
 /* TipTap editor — task list */
 .tiptap ul[data-type="taskList"] { @apply list-none pl-0 my-2 space-y-1; }
 .tiptap ul[data-type="taskList"] li { @apply flex items-start gap-2; }
+.tiptap ul[data-type="taskList"] li > label {
+  @apply flex items-center mt-[3px] shrink-0;
+}
+.tiptap ul[data-type="taskList"] li > label input[type="checkbox"] {
+  @apply h-4 w-4 rounded border border-border accent-primary cursor-pointer;
+}
 .tiptap ul[data-type="taskList"] li[data-checked="true"] > div {
   @apply line-through text-muted-foreground;
 }

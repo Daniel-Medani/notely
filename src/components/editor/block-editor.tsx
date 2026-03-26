@@ -49,7 +49,7 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
             content: json,
           })
           if (!result.success) {
-            toast.error('Failed to save. Your changes may not be preserved. Try again.')
+            toast.error(`Save failed [${result.code}]: ${result.error}`)
           }
         })
       }, 800)
