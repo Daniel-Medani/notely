@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { PanelLeft, PanelRight, Plus, Search, Settings } from 'lucide-react'
+import { PanelLeft, PanelRight, Plus, Search, Settings, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { UserMenu } from './user-menu'
 import { PageTree } from './page-tree'
 import { usePageMutations } from '@/hooks/use-page-mutations'
@@ -24,6 +25,8 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
   const [searchOpen, setSearchOpen] = useState(false)
   const { createPage } = usePageMutations()
   const { orgSlug } = useWorkspace()
+  const pathname = usePathname()
+  const isTrashActive = pathname === `/${orgSlug}/trash`
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -83,6 +86,17 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
             <Button variant="ghost" className="w-full justify-start gap-2">
               <Settings className="h-4 w-4" />
               Settings
+            </Button>
+          </Link>
+          <Link href={`/${orgSlug}/trash`}>
+            <Button
+              variant="ghost"
+              className={`w-full justify-start gap-2 ${isTrashActive ? 'bg-muted font-semibold' : ''}`}
+              aria-label="Trash"
+              aria-current={isTrashActive ? 'page' : undefined}
+            >
+              <Trash2 className="h-4 w-4" />
+              Trash
             </Button>
           </Link>
         </div>
