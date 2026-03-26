@@ -17,6 +17,26 @@ export const auth = betterAuth({
   plugins: [
     organization({
       allowUserToCreateOrganization: true,
+      creatorRole: 'admin',
+      sendInvitationEmail: async (data) => {
+        if (!process.env.RESEND_API_KEY) {
+          console.warn('RESEND_API_KEY not set - invitation email skipped')
+          return
+        }
+        const { Resend } = await import('resend')
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        const acceptUrl = `${process.env.BETTER_AUTH_URL}/invite/${data.invitation.id}`
+        await resend.emails.send({
+          from: 'Notely <noreply@notely.app>',
+          to: data.invitation.email,
+          subject: `You've been invited to join ${data.organization.name} on Notely`,
+          html: `
+            <p>You've been invited to join <strong>${data.organization.name}</strong> on Notely.</p>
+            <p><a href="${acceptUrl}">Accept Invitation</a></p>
+            <p>This link will expire in 48 hours.</p>
+          `,
+        })
+      },
     }),
   ],
   databaseHooks: {
