@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 04-search 04-02-PLAN.md
-last_updated: "2026-03-26T14:28:43.580Z"
+status: Ready to execute
+stopped_at: Completed 05-org-management 05-01-PLAN.md
+last_updated: "2026-03-26T15:19:15.000Z"
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 18
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Users can create, organize, and find their content in a block-based editor with nested pages — fast, reliable, and free to run.
-**Current focus:** Phase 04 — search
+**Current focus:** Phase 05 — org-management
 
 ## Current Position
 
-Phase: 05
-Plan: Not started
+Phase: 05 (org-management) — EXECUTING
+Plan: 2 of 4
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Plan: Not started
 | Phase 03-block-editor P01 | 2 | 2 tasks | 8 files |
 | Phase 04-search P01 | 6 | 2 tasks | 13 files |
 | Phase 04-search P02 | 45 | 2 tasks | 2 files |
+| Phase 05-org-management P01 | 5 | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -110,6 +111,8 @@ Recent decisions affecting current work:
 - [Phase 04-search]: Baseline migration 0_init created to bring Prisma Migrate in sync with db push history before creating GIN index migration
 - [Phase 04-search]: Dialog positioned with top-[10vh] not mt-[10vh] — margin-top on fixed elements overridden by Radix Dialog CSS transforms
 - [Phase 04-search]: Cmd+K listener in Sidebar (not SearchPalette) — SearchPalette is controlled component with open/onOpenChange props; useDebouncedCallback cancel() called on close
+- [Phase 05-org-management]: Separate prisma queries for invitation lookups — Invitation model has no @relation in schema.prisma
+- [Phase 05-org-management]: Mock next/headers in vitest for Server Action tests — headers() throws outside request scope; vi.mock('next/headers') required pattern
 
 ### Pending Todos
 
@@ -122,6 +125,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T13:25:29.518Z
-Stopped at: Completed 04-search 04-02-PLAN.md
+Last session: 2026-03-26T15:19:14.998Z
+Stopped at: Completed 05-org-management 05-01-PLAN.md
 Resume file: None

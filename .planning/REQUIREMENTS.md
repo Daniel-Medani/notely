@@ -57,13 +57,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Organization
 
-- [ ] **ORG-01**: User can create a new organization
-- [ ] **ORG-02**: User can invite members to an organization via email (Resend)
-- [ ] **ORG-03**: Invited user can accept an invitation and join the organization
-- [ ] **ORG-04**: Admin can remove a member from the organization
-- [ ] **ORG-05**: Organization has two roles: Admin and Member
-- [ ] **ORG-06**: Admin can change a member's role
-- [ ] **ORG-07**: All members can view all pages within the organization (org-level access)
+- [x] **ORG-01**: User can create a new organization
+- [x] **ORG-02**: User can invite members to an organization via email (Resend)
+- [x] **ORG-03**: Invited user can accept an invitation and join the organization
+- [x] **ORG-04**: Admin can remove a member from the organization
+- [x] **ORG-05**: Organization has two roles: Admin and Member
+- [x] **ORG-06**: Admin can change a member's role
+- [x] **ORG-07**: All members can view all pages within the organization (org-level access)
 - [ ] **ORG-08**: User can switch between organizations they belong to
 
 ### Tenant Isolation
@@ -174,13 +174,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TRSH-02 | Phase 6 | Pending |
 | TRSH-03 | Phase 6 | Pending |
 | TRSH-04 | Phase 6 | Pending |
-| ORG-01 | Phase 5 | Pending |
-| ORG-02 | Phase 5 | Pending |
-| ORG-03 | Phase 5 | Pending |
-| ORG-04 | Phase 5 | Pending |
-| ORG-05 | Phase 5 | Pending |
-| ORG-06 | Phase 5 | Pending |
-| ORG-07 | Phase 5 | Pending |
+| ORG-01 | Phase 5 | Complete |
+| ORG-02 | Phase 5 | Complete |
+| ORG-03 | Phase 5 | Complete |
+| ORG-04 | Phase 5 | Complete |
+| ORG-05 | Phase 5 | Complete |
+| ORG-06 | Phase 5 | Complete |
+| ORG-07 | Phase 5 | Complete |
 | ORG-08 | Phase 5 | Pending |
 | TNNT-01 | Phase 1 | Complete |
 | TNNT-02 | Phase 1 | Complete |
