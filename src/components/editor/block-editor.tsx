@@ -95,14 +95,18 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
             return {
               onStart: (props: any) => {
                 popup = document.createElement('div')
+                popup.style.position = 'fixed'
+                popup.style.zIndex = '9999'
+                popup.style.minWidth = '220px'
                 document.body.appendChild(popup)
 
                 const rect = props.clientRect?.()
-                if (rect && popup) {
-                  popup.style.position = 'absolute'
+                if (rect) {
                   popup.style.left = `${rect.left}px`
                   popup.style.top = `${rect.bottom + 4}px`
-                  popup.style.zIndex = '50'
+                } else {
+                  popup.style.left = '50px'
+                  popup.style.top = '100px'
                 }
 
                 root = createRoot(popup)
@@ -119,7 +123,7 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
               onUpdate: (props: any) => {
                 if (!popup || !root) return
                 const rect = props.clientRect?.()
-                if (rect && popup) {
+                if (rect) {
                   popup.style.left = `${rect.left}px`
                   popup.style.top = `${rect.bottom + 4}px`
                 }
