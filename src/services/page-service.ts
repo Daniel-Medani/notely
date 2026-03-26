@@ -36,6 +36,16 @@ export class PageService {
     return this.repo.update(id, { emoji }, organizationId)
   }
 
+  async updateContent(id: string, content: unknown, organizationId: string): Promise<PageRecord> {
+    const page = await this.repo.findById(id, organizationId)
+    if (!page) throw new AppError('Page not found.', 'PAGE_NOT_FOUND', 404)
+    return this.repo.update(id, { content }, organizationId)
+  }
+
+  async findById(id: string, organizationId: string): Promise<PageRecord | null> {
+    return this.repo.findById(id, organizationId)
+  }
+
   async findAllForOrg(organizationId: string): Promise<PageRecord[]> {
     return this.repo.findAllForOrg(organizationId)
   }

@@ -13,6 +13,7 @@ export interface UpdatePageData {
   parentId?: string | null
   order?: number
   isDeleted?: boolean
+  content?: unknown  // TipTap JSONContent stored as Prisma Json
 }
 
 export interface PageRecord {

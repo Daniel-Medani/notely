@@ -28,8 +28,15 @@ export const pageDeleteSchema = z.object({
   id: z.string().min(1, 'Page ID is required.'),
 })
 
+export const pageContentSchema = z.object({
+  id: z.string().min(1, 'Page ID is required.'),
+  organizationId: z.string().min(1, 'Organization ID is required.'),
+  content: z.record(z.string(), z.unknown()),
+})
+
 export type PageCreateInput = z.infer<typeof pageCreateSchema>
 export type PageRenameInput = z.infer<typeof pageRenameSchema>
 export type PageMoveInput = z.infer<typeof pageMoveSchema>
 export type PageEmojiInput = z.infer<typeof pageEmojiSchema>
 export type PageDeleteInput = z.infer<typeof pageDeleteSchema>
+export type PageContentInput = z.infer<typeof pageContentSchema>

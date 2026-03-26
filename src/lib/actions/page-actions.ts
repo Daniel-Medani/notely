@@ -8,7 +8,9 @@ import {
   pageDeleteSchema,
   pageMoveSchema,
   pageEmojiSchema,
+  pageContentSchema,
 } from '@/lib/schemas/page'
+import { sanitizeContent } from '@/lib/editor/sanitize-content'
 import { PageService } from '@/services/page-service'
 import { PrismaPageRepository } from '@/repositories/prisma/prisma-page-repository'
 import { prisma } from '@/lib/db'
@@ -81,6 +83,19 @@ export async function updateEmojiAction(input: unknown): Promise<ActionResult<Pa
     const parsed = pageEmojiSchema.parse(input)
     await assertMembership(session.user.id, parsed.organizationId)
     const page = await pageService.updateEmoji(parsed.id, parsed.emoji, parsed.organizationId)
+    return { success: true, data: page }
+  } catch (err) {
+    return handleActionError(err)
+  }
+}
+
+export async function updatePageContentAction(input: unknown): Promise<ActionResult<PageRecord>> {
+  try {
+    const session = await verifySession()
+    const parsed = pageContentSchema.parse(input)
+    await assertMembership(session.user.id, parsed.organizationId)
+    const sanitized = sanitizeContent(parsed.content as Record<string, unknown>)
+    const page = await pageService.updateContent(parsed.id, sanitized, parsed.organizationId)
     return { success: true, data: page }
   } catch (err) {
     return handleActionError(err)

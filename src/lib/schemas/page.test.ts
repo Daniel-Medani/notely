@@ -5,6 +5,7 @@ import {
   pageMoveSchema,
   pageEmojiSchema,
   pageDeleteSchema,
+  pageContentSchema,
 } from './page'
 
 const ORG_ID = 'org_abc123'
@@ -174,6 +175,66 @@ describe('pageDeleteSchema', () => {
     if (!result.success) {
       const idError = result.error.issues.find((i) => i.path.includes('id'))
       expect(idError?.message).toBe('Page ID is required.')
+    }
+  })
+})
+
+describe('pageContentSchema', () => {
+  it('accepts valid id, organizationId, and content', () => {
+    const result = pageContentSchema.safeParse({
+      id: 'clxxx',
+      organizationId: 'org_abc',
+      content: { type: 'doc', content: [] },
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects missing id', () => {
+    const result = pageContentSchema.safeParse({
+      organizationId: 'org_abc',
+      content: { type: 'doc', content: [] },
+    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      const idError = result.error.issues.find((i) => i.path.includes('id'))
+      expect(idError).toBeDefined()
+    }
+  })
+
+  it('rejects missing organizationId', () => {
+    const result = pageContentSchema.safeParse({
+      id: 'clxxx',
+      content: { type: 'doc', content: [] },
+    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      const orgError = result.error.issues.find((i) => i.path.includes('organizationId'))
+      expect(orgError).toBeDefined()
+    }
+  })
+
+  it('rejects missing content', () => {
+    const result = pageContentSchema.safeParse({
+      id: 'clxxx',
+      organizationId: 'org_abc',
+    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      const contentError = result.error.issues.find((i) => i.path.includes('content'))
+      expect(contentError).toBeDefined()
+    }
+  })
+
+  it('rejects empty string organizationId', () => {
+    const result = pageContentSchema.safeParse({
+      id: 'clxxx',
+      organizationId: '',
+      content: { type: 'doc', content: [] },
+    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      const orgError = result.error.issues.find((i) => i.path.includes('organizationId'))
+      expect(orgError?.message).toBe('Organization ID is required.')
     }
   })
 })
