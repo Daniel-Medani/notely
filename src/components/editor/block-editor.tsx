@@ -163,7 +163,10 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
   })
 
   return (
-    <div className="px-16 py-8 relative">
+    <div
+      className="px-16 py-8 relative min-h-[calc(100vh-120px)] cursor-text"
+      onClick={() => editor?.chain().focus().run()}
+    >
       {isPending && (
         <div className="absolute top-2 right-4 flex items-center gap-1.5" aria-live="polite">
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />

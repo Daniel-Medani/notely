@@ -121,6 +121,9 @@
   }
 }
 
+/* TipTap editor — base */
+.tiptap { @apply outline-none; }
+
 /* TipTap editor — placeholder */
 .tiptap p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
