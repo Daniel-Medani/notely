@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useOptimistic } from 'react'
+import { useState, useOptimistic, useTransition } from 'react'
 import { toast } from 'sonner'
 import { MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -48,31 +48,35 @@ export function MembersList({
 }: MembersListProps) {
   const [optimisticMembers, applyOptimistic] = useOptimistic(members)
   const [removeTarget, setRemoveTarget] = useState<Member | null>(null)
+  const [, startTransition] = useTransition()
 
   async function handleRoleChange(memberId: string, newRole: 'admin' | 'member') {
-    applyOptimistic((prev) =>
-      prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m)),
-    )
-    const result = await updateMemberRoleAction({ organizationId, memberId, role: newRole })
-    if (result.success) {
-      toast.success(`Role updated to ${newRole === 'admin' ? 'Admin' : 'Member'}.`)
-    } else {
-      // Revert by re-applying original value — optimistic state reverts on next render
-      toast.error('Failed to update role. Try again.')
-    }
+    startTransition(async () => {
+      applyOptimistic((prev) =>
+        prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m)),
+      )
+      const result = await updateMemberRoleAction({ organizationId, memberId, role: newRole })
+      if (result.success) {
+        toast.success(`Role updated to ${newRole === 'admin' ? 'Admin' : 'Member'}.`)
+      } else {
+        toast.error('Failed to update role. Try again.')
+      }
+    })
   }
 
   async function handleRemoveConfirm() {
     if (!removeTarget) return
     const target = removeTarget
     setRemoveTarget(null)
-    applyOptimistic((prev) => prev.filter((m) => m.id !== target.id))
-    const result = await removeMemberAction({ organizationId, memberId: target.id })
-    if (result.success) {
-      toast.success('Member removed.')
-    } else {
-      toast.error('Failed to remove member. Try again.')
-    }
+    startTransition(async () => {
+      applyOptimistic((prev) => prev.filter((m) => m.id !== target.id))
+      const result = await removeMemberAction({ organizationId, memberId: target.id })
+      if (result.success) {
+        toast.success('Member removed.')
+      } else {
+        toast.error('Failed to remove member. Try again.')
+      }
+    })
   }
 
   if (optimisticMembers.length === 0) {
