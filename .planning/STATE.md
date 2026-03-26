@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 05-org-management 05-02-PLAN.md
-last_updated: "2026-03-26T15:23:39.093Z"
+stopped_at: Completed 05-org-management 05-03-PLAN.md
+last_updated: "2026-03-26T15:27:58.229Z"
 progress:
   total_phases: 7
-  completed_phases: 4
-  total_plans: 18
-  completed_plans: 16
+  completed_phases: 1
+  total_plans: 7
+  completed_plans: 5
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 05 (org-management) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ Plan: 3 of 4
 | Phase 04-search P02 | 45 | 2 tasks | 2 files |
 | Phase 05-org-management P01 | 5 | 2 tasks | 11 files |
 | Phase 05-org-management P02 | 2 | 2 tasks | 5 files |
+| Phase 05-org-management P03 | 2 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -116,6 +117,8 @@ Recent decisions affecting current work:
 - [Phase 05-org-management]: Mock next/headers in vitest for Server Action tests — headers() throws outside request scope; vi.mock('next/headers') required pattern
 - [Phase 05-org-management]: Org list passed as props from layout (not fetched client-side) — avoids loading flash; layout already does server-side auth
 - [Phase 05-org-management]: OrgSwitcher owns both popoverOpen and createDialogOpen state, closes popover before opening dialog to avoid layering issues
+- [Phase 05-org-management]: useOptimistic used for member list — avoids TanStack Query since page is server-rendered and list passed as props
+- [Phase 05-org-management]: user.image typed as optional (string | undefined) in Member interface to match Better Auth listMembers response type
 
 ### Pending Todos
 
@@ -128,6 +131,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T15:23:39.089Z
-Stopped at: Completed 05-org-management 05-02-PLAN.md
+Last session: 2026-03-26T15:27:58.227Z
+Stopped at: Completed 05-org-management 05-03-PLAN.md
 Resume file: None
