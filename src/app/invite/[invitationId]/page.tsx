@@ -32,8 +32,8 @@ export default async function InvitePage({ params }: InvitePageProps) {
       })
     : null
 
-  // Not found state
-  if (!invitation) {
+  // Not found state (also covers orphaned invitation with missing org)
+  if (!invitation || !organization) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
         <Card className="w-full max-w-md">
@@ -81,12 +81,12 @@ export default async function InvitePage({ params }: InvitePageProps) {
             <CardHeader className="text-center">
               <CardTitle className="text-xl font-semibold">Already a member</CardTitle>
               <CardDescription>
-                You&apos;re already a member of {organization?.name}.
+                You&apos;re already a member of {organization.name}.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4">
               <Button asChild>
-                <Link href={`/${organization?.slug}`}>Go to workspace</Link>
+                <Link href={`/${organization.slug}`}>Go to workspace</Link>
               </Button>
             </CardContent>
           </Card>
@@ -100,13 +100,13 @@ export default async function InvitePage({ params }: InvitePageProps) {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-xl font-semibold">You&apos;ve been invited</CardTitle>
-            <CardDescription>Join {organization?.name} on Notely.</CardDescription>
+            <CardDescription>Join {organization.name} on Notely.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
             <AcceptInvitationClient
               invitationId={invitationId}
-              orgName={organization?.name}
-              orgSlug={organization?.slug}
+              orgName={organization.name}
+              orgSlug={organization.slug}
             />
           </CardContent>
         </Card>
@@ -120,7 +120,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-xl font-semibold">You&apos;ve been invited</CardTitle>
-          <CardDescription>Join {organization?.name} on Notely.</CardDescription>
+          <CardDescription>Join {organization.name} on Notely.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-4">
           <Button asChild>
