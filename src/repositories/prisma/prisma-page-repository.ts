@@ -34,9 +34,18 @@ export class PrismaPageRepository implements IPageRepository {
   }
 
   async update(id: string, data: UpdatePageData, organizationId: string): Promise<PageRecord> {
+    // Build update object with only defined fields to avoid Prisma type discrimination issues
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateData: Record<string, any> = {}
+    if (data.title !== undefined) updateData.title = data.title
+    if (data.emoji !== undefined) updateData.emoji = data.emoji
+    if (data.parentId !== undefined) updateData.parentId = data.parentId
+    if (data.order !== undefined) updateData.order = data.order
+    if (data.isDeleted !== undefined) updateData.isDeleted = data.isDeleted
+    if (data.content !== undefined) updateData.content = data.content
     return prisma.page.update({
       where: { id },
-      data: { ...data, organizationId: undefined },
+      data: updateData,
     })
   }
 
