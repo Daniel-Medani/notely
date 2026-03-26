@@ -245,6 +245,61 @@ describe('PageService', () => {
     })
   })
 
+  describe('updateContent', () => {
+    it('updates content and returns updated page record when page exists', async () => {
+      repo._pages.push({
+        id: 'page-1',
+        organizationId: ORG_ID,
+        title: 'Content Page',
+        emoji: null,
+        content: null,
+        order: 1.0,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        parentId: null,
+      })
+
+      const jsonContent = { type: 'doc', content: [] }
+      const result = await service.updateContent('page-1', jsonContent, ORG_ID)
+      expect(result.content).toEqual(jsonContent)
+      expect(repo.update).toHaveBeenCalledWith('page-1', { content: jsonContent }, ORG_ID)
+    })
+
+    it('throws PAGE_NOT_FOUND when page does not exist', async () => {
+      await expect(service.updateContent('nonexistent', {}, ORG_ID)).rejects.toMatchObject({
+        code: 'PAGE_NOT_FOUND',
+      })
+    })
+  })
+
+  describe('findById', () => {
+    it('returns page record when page exists in repo', async () => {
+      repo._pages.push({
+        id: 'page-1',
+        organizationId: ORG_ID,
+        title: 'Find Me',
+        emoji: null,
+        content: null,
+        order: 1.0,
+        isDeleted: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        parentId: null,
+      })
+
+      const result = await service.findById('page-1', ORG_ID)
+      expect(result).not.toBeNull()
+      expect(result?.id).toBe('page-1')
+      expect(repo.findById).toHaveBeenCalledWith('page-1', ORG_ID)
+    })
+
+    it('returns null when page does not exist in repo', async () => {
+      const result = await service.findById('nonexistent', ORG_ID)
+      expect(result).toBeNull()
+    })
+  })
+
   describe('findAllForOrg', () => {
     it('delegates to repo.findAllForOrg and returns non-deleted pages', async () => {
       repo._pages.push(
