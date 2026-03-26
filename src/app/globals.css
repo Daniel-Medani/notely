@@ -202,10 +202,21 @@
 /* TipTap editor — image */
 .tiptap img { @apply max-w-full rounded-md my-3; }
 
-/* TipTap editor — drag handle (community extension appends its own wrapper) */
+/* TipTap editor — drag handle (appended to EditorContent wrapper, positioned via fixed coords) */
 .drag-handle {
-  @apply opacity-0 transition-opacity duration-150 cursor-grab text-muted-foreground;
+  position: fixed;
+  cursor: grab;
+  color: var(--muted-foreground);
+  transition: opacity 0.15s, color 0.15s;
+  z-index: 10;
 }
-.drag-handle:hover { @apply text-foreground; }
-.ProseMirror:hover .drag-handle,
-.drag-handle:hover { @apply opacity-100; }
+.drag-handle::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 16px;
+  background-image: radial-gradient(circle, currentColor 1.5px, transparent 1.5px);
+  background-size: 5px 5.3px;
+}
+.drag-handle:hover { color: var(--foreground); }
+.drag-handle.hide { opacity: 0; pointer-events: none; }
