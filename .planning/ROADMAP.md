@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 3: Block Editor** - Full TipTap block editor with auto-save, slash commands, and drag-and-drop reordering
 - [x] **Phase 4: Search** - Full-text search across all pages in the current organization via PostgreSQL FTS (completed 2026-03-26)
 - [x] **Phase 5: Org Management** - Organization creation, email invitations, role-based membership, and org switching (completed 2026-03-26)
-- [ ] **Phase 6: Trash** - Soft delete with trash drawer, restore, and permanent deletion
+- [x] **Phase 6: Trash** - Soft delete with trash drawer, restore, and permanent deletion (completed 2026-03-26)
 - [ ] **Phase 7: Polish and CI/CD** - Dark mode, rate limiting, full Vitest and Playwright suites, CI/CD pipeline hardening
 
 ## Phase Details
@@ -127,12 +127,12 @@ Plans:
   2. User can view all trashed pages for the current organization in a dedicated trash view
   3. User can restore a trashed page and it reappears in the sidebar at its original location
   4. User can permanently delete a trashed page and it is gone from the database
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 06-01-PLAN.md — TDD: IPageRepository extension, PageService trash lifecycle (cascade delete, restore, permanent delete, empty trash)
 - [x] 06-02-PLAN.md — Zod schemas, Server Actions, and action tests for trash operations
-- [ ] 06-03-PLAN.md — Trash UI: route page, TrashList component, sidebar link, visual checkpoint
+- [x] 06-03-PLAN.md — Trash UI: route page, TrashList component, sidebar link, visual checkpoint
 
 **UI hint**: yes
 
@@ -161,5 +161,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Block Editor | 2/3 | In Progress|  |
 | 4. Search | 2/2 | Complete   | 2026-03-26 |
 | 5. Org Management | 4/4 | Complete   | 2026-03-26 |
-| 6. Trash | 2/3 | In Progress|  |
+| 6. Trash | 3/3 | Complete   | 2026-03-26 |
 | 7. Polish and CI/CD | 0/? | Not started | - |

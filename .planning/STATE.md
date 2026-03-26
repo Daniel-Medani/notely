@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 06-trash-02-PLAN.md
-last_updated: "2026-03-26T19:03:07.252Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 06-trash-03-PLAN.md (awaiting human-verify checkpoint)
+last_updated: "2026-03-26T19:06:58.020Z"
 progress:
   total_phases: 7
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 21
-  completed_plans: 20
+  completed_plans: 21
 ---
 
 # Project State
@@ -67,6 +67,7 @@ Plan: 3 of 3
 | Phase 05-org-management P04 | 30 | 2 tasks | 5 files |
 | Phase 06-trash P01 | 10 | 2 tasks | 4 files |
 | Phase 06-trash P02 | 2 | 1 tasks | 3 files |
+| Phase 06-trash P03 | 12 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -130,6 +131,7 @@ Recent decisions affecting current work:
 - [Phase 06-trash]: collectDescendantIds is a private BFS utility on PageService used by deletePage, restorePage, permanentlyDeletePage
 - [Phase 06-trash]: fetchTrashedPagesAction returns PageRecord[] directly (not ActionResult) — read action consumed by Server Component, not mutation handler
 - [Phase 06-trash]: restorePageAction dual revalidatePath: /[org] layout (sidebar) + /[org]/trash page — both views need refresh after restore
+- [Phase 06-trash]: TrashList permanent-delete dialog uses single controlled AlertDialog with deleteTarget state (not one per row) — avoids DOM/portal overhead
 
 ### Pending Todos
 
@@ -142,6 +144,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T19:03:07.249Z
-Stopped at: Completed 06-trash-02-PLAN.md
+Last session: 2026-03-26T19:06:58.018Z
+Stopped at: Completed 06-trash-03-PLAN.md (awaiting human-verify checkpoint)
 Resume file: None
