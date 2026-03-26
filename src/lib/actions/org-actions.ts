@@ -1,6 +1,7 @@
 'use server'
 
 import { headers } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 import { verifySession } from '@/lib/dal'
 import { handleActionError, AppError, type ActionResult } from '@/lib/errors'
 import { auth } from '@/lib/auth'
@@ -97,6 +98,7 @@ export async function removeMemberAction(input: unknown): Promise<ActionResult<v
       },
       headers: await headers(),
     })
+    revalidatePath('/[org]/settings/members', 'page')
     return { success: true, data: undefined }
   } catch (err) {
     return handleActionError(err)
@@ -120,6 +122,7 @@ export async function updateMemberRoleAction(input: unknown): Promise<ActionResu
       },
       headers: await headers(),
     })
+    revalidatePath('/[org]/settings/members', 'page')
     return { success: true, data: undefined }
   } catch (err) {
     return handleActionError(err)
