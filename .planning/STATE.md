@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 05-org-management 05-04-PLAN.md
-last_updated: "2026-03-26T17:57:46.576Z"
+status: Ready to execute
+stopped_at: Completed 06-trash-01-PLAN.md
+last_updated: "2026-03-26T18:58:34.472Z"
 progress:
   total_phases: 7
   completed_phases: 5
-  total_plans: 18
-  completed_plans: 18
+  total_plans: 21
+  completed_plans: 19
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Users can create, organize, and find their content in a block-based editor with nested pages — fast, reliable, and free to run.
-**Current focus:** Phase 05 — org-management
+**Current focus:** Phase 06 — trash
 
 ## Current Position
 
-Phase: 06
-Plan: Not started
+Phase: 06 (trash) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Plan: Not started
 | Phase 05-org-management P02 | 2 | 2 tasks | 5 files |
 | Phase 05-org-management P03 | 2 | 2 tasks | 4 files |
 | Phase 05-org-management P04 | 30 | 2 tasks | 5 files |
+| Phase 06-trash P01 | 10 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -123,6 +124,9 @@ Recent decisions affecting current work:
 - [Phase 05-org-management]: auth.api.getSession used instead of verifySession() on invite page — verifySession() always redirects, breaking public invite page flow
 - [Phase 05-org-management]: Separate prisma queries for invitation lookups — Invitation model has no @relation in schema.prisma so include throws Prisma type error
 - [Phase 05-org-management]: callbackUrl validated with startsWith('/') — prevents open redirect attacks while supporting relative-path post-login navigation
+- [Phase 06-trash]: deletePage now calls softDeleteMany (BFS cascade) instead of update(isDeleted:true)
+- [Phase 06-trash]: restorePage re-parents to root when parent is in trash (D-09) — checked via repo.findById on parentId
+- [Phase 06-trash]: collectDescendantIds is a private BFS utility on PageService used by deletePage, restorePage, permanentlyDeletePage
 
 ### Pending Todos
 
@@ -135,6 +139,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T17:50:41.658Z
-Stopped at: Completed 05-org-management 05-04-PLAN.md
+Last session: 2026-03-26T18:58:34.469Z
+Stopped at: Completed 06-trash-01-PLAN.md
 Resume file: None

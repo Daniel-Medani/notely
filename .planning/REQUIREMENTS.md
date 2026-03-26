@@ -50,10 +50,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Trash
 
-- [ ] **TRSH-01**: Deleted pages are soft-deleted (moved to trash, not permanently removed)
-- [ ] **TRSH-02**: User can view all trashed pages for the current organization
-- [ ] **TRSH-03**: User can restore a trashed page to its original location
-- [ ] **TRSH-04**: User can permanently delete a trashed page
+- [x] **TRSH-01**: Deleted pages are soft-deleted (moved to trash, not permanently removed)
+- [x] **TRSH-02**: User can view all trashed pages for the current organization
+- [x] **TRSH-03**: User can restore a trashed page to its original location
+- [x] **TRSH-04**: User can permanently delete a trashed page
 
 ### Organization
 
@@ -170,10 +170,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SRCH-01 | Phase 4 | Complete |
 | SRCH-02 | Phase 4 | Complete |
 | SRCH-03 | Phase 4 | Complete |
-| TRSH-01 | Phase 6 | Pending |
-| TRSH-02 | Phase 6 | Pending |
-| TRSH-03 | Phase 6 | Pending |
-| TRSH-04 | Phase 6 | Pending |
+| TRSH-01 | Phase 6 | Complete |
+| TRSH-02 | Phase 6 | Complete |
+| TRSH-03 | Phase 6 | Complete |
+| TRSH-04 | Phase 6 | Complete |
 | ORG-01 | Phase 5 | Complete |
 | ORG-02 | Phase 5 | Complete |
 | ORG-03 | Phase 5 | Complete |
