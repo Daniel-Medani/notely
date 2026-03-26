@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-03-26T02:04:36.209Z"
+status: Ready to plan
+stopped_at: Completed 03-block-editor 03-01-PLAN.md
+last_updated: "2026-03-26T03:21:32.013Z"
 progress:
   total_phases: 7
-  completed_phases: 2
-  total_plans: 12
-  completed_plans: 10
+  completed_phases: 3
+  total_plans: 18
+  completed_plans: 12
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 
 ## Current Position
 
-Phase: 03 (block-editor) — EXECUTING
-Plan: 2 of 3
+Phase: 04
+Plan: Not started
 
 ## Performance Metrics
 
@@ -58,6 +58,7 @@ Plan: 2 of 3
 | Phase 02-page-tree P04 | 8 | 2 tasks | 3 files |
 | Phase 02-page-tree P04 | 50 | 3 tasks | 3 files |
 | Phase 03-block-editor P02 | 117 | 2 tasks | 5 files |
+| Phase 03-block-editor P01 | 2 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -98,6 +99,9 @@ Recent decisions affecting current work:
 - [Phase 02-page-tree]: frimousse is unstyled by design — Tailwind classes and custom Row/Emoji/CategoryHeader renderers must be passed via the components prop; Viewport needs explicit height or it collapses
 - [Phase 02-page-tree]: session.session.activeOrganizationId returns null in current Better Auth version — all page Server Actions now accept explicit organizationId from client; assertMembership() guard verifies user is a member before any mutation
 - [Phase 03-block-editor]: tiptap-extension-global-drag-handle community package used (MIT, no yjs dependency) instead of official drag-handle-react which requires yjs/collaboration — banned by CLAUDE.md
+- [Phase 03-block-editor]: Zod v4 requires z.record(z.string(), z.unknown()) — z.record(z.unknown()) is broken in v4, causes TypeError at runtime
+- [Phase 03-block-editor]: sanitizeContent uses /^javascript:/i regex (case-insensitive), strips from link mark href and image node src, returns immutable new object
+- [Phase 03-block-editor]: updatePageContentAction asserts membership before saving — consistent with all other page mutations
 
 ### Pending Todos
 
@@ -110,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T02:04:36.206Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-03-26T02:05:35.812Z
+Stopped at: Completed 03-block-editor 03-01-PLAN.md
 Resume file: None
