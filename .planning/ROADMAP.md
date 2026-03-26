@@ -146,7 +146,14 @@ Plans:
   3. All Vitest unit and integration tests pass, including two-tenant cross-isolation tests that verify no cross-tenant data access
   4. All Playwright E2E tests pass covering auth, page CRUD, editor save, search, and trash recovery flows
   5. Every pull request to development and main requires all CI checks (lint, typecheck, unit tests, E2E) to pass before merge
-**Plans**: TBD
+**Plans:** 4 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — Dark mode toggle: ThemeToggle component + sidebar integration
+- [ ] 07-02-PLAN.md — Rate limiting: Upstash ratelimit module + apply to all mutation Server Actions
+- [ ] 07-03-PLAN.md — Vitest cross-tenant isolation tests for PrismaPageRepository
+- [ ] 07-04-PLAN.md — Playwright E2E test suite + GitHub Actions e2e job + CI hardening
+
 **UI hint**: yes
 
 ## Progress
@@ -162,4 +169,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. Search | 2/2 | Complete   | 2026-03-26 |
 | 5. Org Management | 4/4 | Complete   | 2026-03-26 |
 | 6. Trash | 3/3 | Complete   | 2026-03-26 |
-| 7. Polish and CI/CD | 0/? | Not started | - |
+| 7. Polish and CI/CD | 0/4 | Not started | - |
