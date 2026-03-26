@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 import { useRouter } from 'next/navigation'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Search, FileText } from 'lucide-react'
@@ -117,12 +117,13 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange} aria-label="Search pages">
       <DialogContent
-        className="p-0 max-w-xl mt-[10vh] gap-0 top-0 translate-y-0"
+        className="p-0 max-w-xl gap-0 top-[10vh] translate-y-0"
         showCloseButton={false}
         onKeyDown={handleKeyDown}
         aria-label="Search pages"
       >
         <DialogTitle className="sr-only">Search pages</DialogTitle>
+        <DialogDescription className="sr-only">Search through your workspace pages</DialogDescription>
         {/* Input area */}
         <div className="flex items-center gap-2 px-4 border-b">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
