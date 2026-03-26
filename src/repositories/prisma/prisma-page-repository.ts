@@ -52,4 +52,42 @@ export class PrismaPageRepository implements IPageRepository {
   async delete(id: string, organizationId: string): Promise<void> {
     await prisma.page.delete({ where: { id } })
   }
+
+  async findAllTrashed(organizationId: string): Promise<PageRecord[]> {
+    return prisma.page.findMany({
+      where: { organizationId, isDeleted: true },
+      orderBy: { updatedAt: 'desc' },
+    })
+  }
+
+  async softDeleteMany(ids: string[], organizationId: string): Promise<void> {
+    await prisma.page.updateMany({
+      where: { id: { in: ids }, organizationId },
+      data: { isDeleted: true },
+    })
+  }
+
+  async restoreMany(ids: string[], organizationId: string, newParentId: string | null, rootId: string): Promise<void> {
+    await prisma.page.updateMany({
+      where: { id: { in: ids }, organizationId },
+      data: { isDeleted: false },
+    })
+    // Update root page's parentId separately (only the root, not descendants)
+    await prisma.page.update({
+      where: { id: rootId },
+      data: { parentId: newParentId },
+    })
+  }
+
+  async permanentlyDeleteMany(ids: string[], organizationId: string): Promise<void> {
+    await prisma.page.deleteMany({
+      where: { id: { in: ids }, organizationId },
+    })
+  }
+
+  async emptyTrash(organizationId: string): Promise<void> {
+    await prisma.page.deleteMany({
+      where: { organizationId, isDeleted: true },
+    })
+  }
 }
