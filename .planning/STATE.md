@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 03-block-editor 03-01-PLAN.md
-last_updated: "2026-03-26T03:21:32.013Z"
+status: Ready to execute
+stopped_at: Completed 04-search 04-01-PLAN.md
+last_updated: "2026-03-26T12:31:04.822Z"
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 18
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-24)
 
 **Core value:** Users can create, organize, and find their content in a block-based editor with nested pages — fast, reliable, and free to run.
-**Current focus:** Phase 03 — block-editor
+**Current focus:** Phase 04 — search
 
 ## Current Position
 
-Phase: 04
-Plan: Not started
+Phase: 04 (search) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Plan: Not started
 | Phase 02-page-tree P04 | 50 | 3 tasks | 3 files |
 | Phase 03-block-editor P02 | 117 | 2 tasks | 5 files |
 | Phase 03-block-editor P01 | 2 | 2 tasks | 8 files |
+| Phase 04-search P01 | 6 | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,10 @@ Recent decisions affecting current work:
 - [Phase 03-block-editor]: Zod v4 requires z.record(z.string(), z.unknown()) — z.record(z.unknown()) is broken in v4, causes TypeError at runtime
 - [Phase 03-block-editor]: sanitizeContent uses /^javascript:/i regex (case-insensitive), strips from link mark href and image node src, returns immutable new object
 - [Phase 03-block-editor]: updatePageContentAction asserts membership before saving — consistent with all other page mutations
+- [Phase 04-search]: PrismaSearchRepository uses $queryRaw<SearchResult[]> tagged template — parameterization is automatic, SQL-injection safe (no $queryRawUnsafe)
+- [Phase 04-search]: Vitest needs server-only mock (src/__mocks__/server-only.ts) and dotenv.config in vitest.config.ts for repository integration tests to access DATABASE_URL
+- [Phase 04-search]: vi.hoisted() required in search-actions.test.ts — mock factory references mockSearch which must be available before vi.mock hoisting
+- [Phase 04-search]: Baseline migration 0_init created to bring Prisma Migrate in sync with db push history before creating GIN index migration
 
 ### Pending Todos
 
@@ -114,6 +119,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T02:05:35.812Z
-Stopped at: Completed 03-block-editor 03-01-PLAN.md
+Last session: 2026-03-26T12:31:04.820Z
+Stopped at: Completed 04-search 04-01-PLAN.md
 Resume file: None

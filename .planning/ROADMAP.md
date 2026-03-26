@@ -93,7 +93,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — TDD: search schema, repository, service, server action, GIN index migration
+- [x] 04-01-PLAN.md — TDD: search schema, repository, service, server action, GIN index migration
 - [ ] 04-02-PLAN.md — SearchPalette UI component, sidebar integration, visual checkpoint
 
 **UI hint**: yes

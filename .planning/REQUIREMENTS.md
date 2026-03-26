@@ -37,16 +37,16 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **EDIT-04**: Editor supports blockquote, divider, and image URL embed blocks
 - [x] **EDIT-05**: User can insert blocks via slash command (`/`) menu with filtered options
 - [x] **EDIT-06**: User can drag and drop blocks to reorder them within a page
-- [ ] **EDIT-07**: Editor content auto-saves via debounce (no manual save button)
-- [ ] **EDIT-08**: Editor content is stored as JSON (TipTap `getJSON()`)
+- [x] **EDIT-07**: Editor content auto-saves via debounce (no manual save button)
+- [x] **EDIT-08**: Editor content is stored as JSON (TipTap `getJSON()`)
 - [ ] **EDIT-09**: Standard keyboard shortcuts work for formatting (Cmd+B, Cmd+I, Cmd+U, etc.)
-- [ ] **EDIT-10**: Editor content is sanitized before storage (no `javascript:` URLs in links)
+- [x] **EDIT-10**: Editor content is sanitized before storage (no `javascript:` URLs in links)
 
 ### Search
 
-- [ ] **SRCH-01**: User can search across all pages in the current organization via a search bar or Cmd+K
-- [ ] **SRCH-02**: Search results show matching page titles and content excerpts
-- [ ] **SRCH-03**: Search uses PostgreSQL full-text search with GIN index
+- [x] **SRCH-01**: User can search across all pages in the current organization via a search bar or Cmd+K
+- [x] **SRCH-02**: Search results show matching page titles and content excerpts
+- [x] **SRCH-03**: Search uses PostgreSQL full-text search with GIN index
 
 ### Trash
 
@@ -163,13 +163,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | EDIT-04 | Phase 3 | Pending |
 | EDIT-05 | Phase 3 | Complete |
 | EDIT-06 | Phase 3 | Complete |
-| EDIT-07 | Phase 3 | Pending |
-| EDIT-08 | Phase 3 | Pending |
+| EDIT-07 | Phase 3 | Complete |
+| EDIT-08 | Phase 3 | Complete |
 | EDIT-09 | Phase 3 | Pending |
-| EDIT-10 | Phase 3 | Pending |
-| SRCH-01 | Phase 4 | Pending |
-| SRCH-02 | Phase 4 | Pending |
-| SRCH-03 | Phase 4 | Pending |
+| EDIT-10 | Phase 3 | Complete |
+| SRCH-01 | Phase 4 | Complete |
+| SRCH-02 | Phase 4 | Complete |
+| SRCH-03 | Phase 4 | Complete |
 | TRSH-01 | Phase 6 | Pending |
 | TRSH-02 | Phase 6 | Pending |
 | TRSH-03 | Phase 6 | Pending |
