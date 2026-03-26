@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 05-org-management 05-03-PLAN.md
-last_updated: "2026-03-26T15:27:58.229Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 05-org-management 05-04-PLAN.md
+last_updated: "2026-03-26T17:50:41.661Z"
 progress:
   total_phases: 7
-  completed_phases: 1
-  total_plans: 7
-  completed_plans: 5
+  completed_phases: 5
+  total_plans: 18
+  completed_plans: 18
 ---
 
 # Project State
@@ -64,6 +64,7 @@ Plan: 4 of 4
 | Phase 05-org-management P01 | 5 | 2 tasks | 11 files |
 | Phase 05-org-management P02 | 2 | 2 tasks | 5 files |
 | Phase 05-org-management P03 | 2 | 2 tasks | 4 files |
+| Phase 05-org-management P04 | 30 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -119,6 +120,9 @@ Recent decisions affecting current work:
 - [Phase 05-org-management]: OrgSwitcher owns both popoverOpen and createDialogOpen state, closes popover before opening dialog to avoid layering issues
 - [Phase 05-org-management]: useOptimistic used for member list — avoids TanStack Query since page is server-rendered and list passed as props
 - [Phase 05-org-management]: user.image typed as optional (string | undefined) in Member interface to match Better Auth listMembers response type
+- [Phase 05-org-management]: auth.api.getSession used instead of verifySession() on invite page — verifySession() always redirects, breaking public invite page flow
+- [Phase 05-org-management]: Separate prisma queries for invitation lookups — Invitation model has no @relation in schema.prisma so include throws Prisma type error
+- [Phase 05-org-management]: callbackUrl validated with startsWith('/') — prevents open redirect attacks while supporting relative-path post-login navigation
 
 ### Pending Todos
 
@@ -131,6 +135,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T15:27:58.227Z
-Stopped at: Completed 05-org-management 05-03-PLAN.md
+Last session: 2026-03-26T17:50:41.658Z
+Stopped at: Completed 05-org-management 05-04-PLAN.md
 Resume file: None

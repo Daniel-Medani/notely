@@ -108,13 +108,13 @@ Plans:
   3. Admin can remove a member or change their role (Admin / Member); all role changes take effect immediately on the next request
   4. All members of an organization can view all pages within it; no member can view pages in an organization they do not belong to
   5. User can switch between organizations they belong to and the workspace updates to show that org's content
-**Plans:** 2/2 plans complete
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 05-01-PLAN.md — TDD: Zod schemas, auth.ts config (creatorRole + sendInvitationEmail), proxy.ts update, Server Actions
 - [x] 05-02-PLAN.md — Org switcher popover, create org dialog, wire into sidebar and layout
-- [ ] 05-03-PLAN.md — Settings/members page, invite form, member list with role management
-- [ ] 05-04-PLAN.md — Invitation accept page, visual verification checkpoint
+- [x] 05-03-PLAN.md — Settings/members page, invite form, member list with role management
+- [x] 05-04-PLAN.md — Invitation accept page, visual verification checkpoint
 
 **UI hint**: yes
 
@@ -154,6 +154,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Page Tree | 4/4 | Complete   | 2026-03-25 |
 | 3. Block Editor | 2/3 | In Progress|  |
 | 4. Search | 2/2 | Complete   | 2026-03-26 |
-| 5. Org Management | 2/2 | Complete   | 2026-03-26 |
+| 5. Org Management | 4/4 | Complete   | 2026-03-26 |
 | 6. Trash | 0/? | Not started | - |
 | 7. Polish and CI/CD | 0/? | Not started | - |
