@@ -20,11 +20,17 @@ interface InvitePageProps {
 export default async function InvitePage({ params }: InvitePageProps) {
   const { invitationId } = await params
 
-  // Fetch invitation with organization details
+  // Fetch invitation (no @relation to Organization in schema — use separate queries)
   const invitation = await prisma.invitation.findUnique({
     where: { id: invitationId },
-    include: { organization: { select: { name: true, slug: true } } },
   })
+
+  const organization = invitation
+    ? await prisma.organization.findUnique({
+        where: { id: invitation.organizationId },
+        select: { name: true, slug: true },
+      })
+    : null
 
   // Not found state
   if (!invitation) {
@@ -75,12 +81,12 @@ export default async function InvitePage({ params }: InvitePageProps) {
             <CardHeader className="text-center">
               <CardTitle className="text-xl font-semibold">Already a member</CardTitle>
               <CardDescription>
-                You&apos;re already a member of {invitation.organization.name}.
+                You&apos;re already a member of {organization?.name}.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4">
               <Button asChild>
-                <Link href={`/${invitation.organization.slug}`}>Go to workspace</Link>
+                <Link href={`/${organization?.slug}`}>Go to workspace</Link>
               </Button>
             </CardContent>
           </Card>
@@ -94,13 +100,13 @@ export default async function InvitePage({ params }: InvitePageProps) {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-xl font-semibold">You&apos;ve been invited</CardTitle>
-            <CardDescription>Join {invitation.organization.name} on Notely.</CardDescription>
+            <CardDescription>Join {organization?.name} on Notely.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-4">
             <AcceptInvitationClient
               invitationId={invitationId}
-              orgName={invitation.organization.name}
-              orgSlug={invitation.organization.slug}
+              orgName={organization?.name}
+              orgSlug={organization?.slug}
             />
           </CardContent>
         </Card>
@@ -114,7 +120,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-xl font-semibold">You&apos;ve been invited</CardTitle>
-          <CardDescription>Join {invitation.organization.name} on Notely.</CardDescription>
+          <CardDescription>Join {organization?.name} on Notely.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-4">
           <Button asChild>
