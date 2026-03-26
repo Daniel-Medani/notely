@@ -84,8 +84,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Theme
 
-- [ ] **THEME-01**: User can toggle between light and dark mode
-- [ ] **THEME-02**: Theme defaults to system preference
+- [x] **THEME-01**: User can toggle between light and dark mode
+- [x] **THEME-02**: Theme defaults to system preference
 
 ### CI/CD
 
@@ -192,8 +192,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SEC-04 | Phase 1 | Complete |
 | SEC-05 | Phase 1 | Complete |
 | SEC-06 | Phase 1 | Complete |
-| THEME-01 | Phase 7 | Pending |
-| THEME-02 | Phase 7 | Pending |
+| THEME-01 | Phase 7 | Complete |
+| THEME-02 | Phase 7 | Complete |
 | CICD-01 | Phase 1 | Complete |
 | CICD-02 | Phase 1 | Complete |
 | CICD-03 | Phase 7 | Pending |

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Phase complete — ready for verification
-stopped_at: Completed 06-trash-03-PLAN.md
-last_updated: "2026-03-26T22:34:20.711Z"
+stopped_at: Completed 07-polish-and-ci-cd-07-01-PLAN.md
+last_updated: "2026-03-26T23:28:34.737Z"
 progress:
   total_phases: 7
-  completed_phases: 6
-  total_plans: 21
-  completed_plans: 21
+  completed_phases: 1
+  total_plans: 11
+  completed_plans: 9
 ---
 
 # Project State
@@ -69,6 +69,7 @@ Plan: 3 of 3
 | Phase 06-trash P02 | 2 | 1 tasks | 3 files |
 | Phase 06-trash P03 | 12 | 2 tasks | 3 files |
 | Phase 06-trash P03 | 28 | 3 tasks | 3 files |
+| Phase 07-polish-and-ci-cd P01 | 3 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -134,6 +135,8 @@ Recent decisions affecting current work:
 - [Phase 06-trash]: restorePageAction dual revalidatePath: /[org] layout (sidebar) + /[org]/trash page — both views need refresh after restore
 - [Phase 06-trash]: TrashList permanent-delete dialog uses single controlled AlertDialog with deleteTarget state (not one per row) — avoids DOM/portal overhead
 - [Phase 06-trash]: TrashList permanent-delete dialog uses single controlled AlertDialog with deleteTarget state (not one per row) — avoids DOM/portal overhead
+- [Phase 07-polish-and-ci-cd]: Use @vitest-environment jsdom inline directive for React component tests to preserve node environment for server-side integration tests
+- [Phase 07-polish-and-ci-cd]: ThemeToggle uses mounted guard pattern with resolvedTheme to prevent SSR hydration mismatch
 
 ### Pending Todos
 
@@ -146,6 +149,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T22:34:20.709Z
-Stopped at: Completed 06-trash-03-PLAN.md
+Last session: 2026-03-26T23:28:34.734Z
+Stopped at: Completed 07-polish-and-ci-cd-07-01-PLAN.md
 Resume file: None
