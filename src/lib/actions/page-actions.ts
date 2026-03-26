@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { verifySession } from '@/lib/dal'
 import { handleActionError, AppError, type ActionResult } from '@/lib/errors'
 import {
@@ -9,6 +10,9 @@ import {
   pageMoveSchema,
   pageEmojiSchema,
   pageContentSchema,
+  pageRestoreSchema,
+  pagePermanentDeleteSchema,
+  pageEmptyTrashSchema,
 } from '@/lib/schemas/page'
 import { sanitizeContent } from '@/lib/editor/sanitize-content'
 import { PageService } from '@/services/page-service'
@@ -112,4 +116,53 @@ export async function fetchPagesAction(organizationId: string): Promise<PageReco
   })
   if (!member) return []
   return pageService.findAllForOrg(organizationId)
+}
+
+export async function restorePageAction(input: unknown): Promise<ActionResult<void>> {
+  try {
+    const session = await verifySession()
+    const parsed = pageRestoreSchema.parse(input)
+    await assertMembership(session.user.id, parsed.organizationId)
+    await pageService.restorePage(parsed.id, parsed.organizationId)
+    revalidatePath('/[org]', 'layout') // Refresh sidebar page tree
+    revalidatePath('/[org]/trash', 'page') // Refresh trash list
+    return { success: true, data: undefined }
+  } catch (err) {
+    return handleActionError(err)
+  }
+}
+
+export async function permanentlyDeletePageAction(input: unknown): Promise<ActionResult<void>> {
+  try {
+    const session = await verifySession()
+    const parsed = pagePermanentDeleteSchema.parse(input)
+    await assertMembership(session.user.id, parsed.organizationId)
+    await pageService.permanentlyDeletePage(parsed.id, parsed.organizationId)
+    revalidatePath('/[org]/trash', 'page') // Refresh trash list
+    return { success: true, data: undefined }
+  } catch (err) {
+    return handleActionError(err)
+  }
+}
+
+export async function emptyTrashAction(input: unknown): Promise<ActionResult<void>> {
+  try {
+    const session = await verifySession()
+    const parsed = pageEmptyTrashSchema.parse(input)
+    await assertMembership(session.user.id, parsed.organizationId)
+    await pageService.emptyTrash(parsed.organizationId)
+    revalidatePath('/[org]/trash', 'page') // Refresh trash list
+    return { success: true, data: undefined }
+  } catch (err) {
+    return handleActionError(err)
+  }
+}
+
+export async function fetchTrashedPagesAction(organizationId: string): Promise<PageRecord[]> {
+  const session = await verifySession()
+  const member = await prisma.member.findFirst({
+    where: { userId: session.user.id, organizationId },
+  })
+  if (!member) return []
+  return pageService.listTrashedPages(organizationId)
 }
