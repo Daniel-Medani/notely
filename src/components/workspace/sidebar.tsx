@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { PanelLeft, PanelRight, Plus } from 'lucide-react'
+import { PanelLeft, PanelRight, Plus, Search } from 'lucide-react'
 import { UserMenu } from './user-menu'
 import { PageTree } from './page-tree'
 import { usePageMutations } from '@/hooks/use-page-mutations'
+import { SearchPalette } from './search-palette'
 
 interface SidebarProps {
   userName: string
@@ -15,7 +16,19 @@ interface SidebarProps {
 
 export function Sidebar({ userName, userImage }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { createPage } = usePageMutations()
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <>
@@ -27,6 +40,19 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
         {/* Top: Brand */}
         <div className="flex h-12 items-center px-4">
           <span className="text-sm font-semibold">Notely</span>
+        </div>
+
+        {/* Search button */}
+        <div className="px-2 py-1">
+          <Button
+            variant="ghost"
+            className="w-full justify-start gap-2 text-muted-foreground"
+            onClick={() => setSearchOpen(true)}
+          >
+            <Search className="h-4 w-4" />
+            <span className="text-sm">Search</span>
+            <kbd className="ml-auto text-xs text-muted-foreground">Cmd+K</kbd>
+          </Button>
         </div>
 
         <Separator />
@@ -66,6 +92,8 @@ export function Sidebar({ userName, userImage }: SidebarProps) {
       >
         {collapsed ? <PanelRight className="h-4 w-4" /> : <PanelLeft className="h-4 w-4" />}
       </Button>
+
+      <SearchPalette open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   )
 }
