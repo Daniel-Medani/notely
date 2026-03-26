@@ -84,12 +84,13 @@ export const SLASH_COMMANDS: SlashCommandItem[] = [
     aliases: ['img', 'image', 'photo'],
     icon: 'Image',
     command: ({ editor, range }) => {
-      const url = window.prompt('Image URL')
-      if (url) {
-        editor.chain().focus().deleteRange(range).setImage({ src: url }).run()
-      } else {
-        editor.chain().focus().deleteRange(range).run()
-      }
+      editor.chain().focus().deleteRange(range).run()
+      setTimeout(() => {
+        const url = window.prompt('Paste image URL')
+        if (url) {
+          editor.chain().focus().setImage({ src: url }).run()
+        }
+      }, 50)
     },
   },
 ]
