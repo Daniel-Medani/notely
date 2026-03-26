@@ -94,7 +94,10 @@ export async function updatePageContentAction(input: unknown): Promise<ActionRes
     const session = await verifySession()
     const parsed = pageContentSchema.parse(input)
     await assertMembership(session.user.id, parsed.organizationId)
-    const sanitized = sanitizeContent(parsed.content as Record<string, unknown>)
+    // JSON round-trip strips React's internal proxy that Next.js wraps Server Action
+    // arguments in — Prisma's serializer cannot introspect proxy objects directly.
+    const plain = JSON.parse(JSON.stringify(parsed.content))
+    const sanitized = sanitizeContent(plain as Record<string, unknown>)
     const page = await pageService.updateContent(parsed.id, sanitized, parsed.organizationId)
     return { success: true, data: page }
   } catch (err) {
