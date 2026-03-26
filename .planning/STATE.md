@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 04-search 04-01-PLAN.md
-last_updated: "2026-03-26T12:31:04.822Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 04-search 04-02-PLAN.md
+last_updated: "2026-03-26T13:25:29.521Z"
 progress:
   total_phases: 7
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 18
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
@@ -60,6 +60,7 @@ Plan: 2 of 2
 | Phase 03-block-editor P02 | 117 | 2 tasks | 5 files |
 | Phase 03-block-editor P01 | 2 | 2 tasks | 8 files |
 | Phase 04-search P01 | 6 | 2 tasks | 13 files |
+| Phase 04-search P02 | 45 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,8 @@ Recent decisions affecting current work:
 - [Phase 04-search]: Vitest needs server-only mock (src/__mocks__/server-only.ts) and dotenv.config in vitest.config.ts for repository integration tests to access DATABASE_URL
 - [Phase 04-search]: vi.hoisted() required in search-actions.test.ts — mock factory references mockSearch which must be available before vi.mock hoisting
 - [Phase 04-search]: Baseline migration 0_init created to bring Prisma Migrate in sync with db push history before creating GIN index migration
+- [Phase 04-search]: Dialog positioned with top-[10vh] not mt-[10vh] — margin-top on fixed elements overridden by Radix Dialog CSS transforms
+- [Phase 04-search]: Cmd+K listener in Sidebar (not SearchPalette) — SearchPalette is controlled component with open/onOpenChange props; useDebouncedCallback cancel() called on close
 
 ### Pending Todos
 
@@ -119,6 +122,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T12:31:04.820Z
-Stopped at: Completed 04-search 04-01-PLAN.md
+Last session: 2026-03-26T13:25:29.518Z
+Stopped at: Completed 04-search 04-02-PLAN.md
 Resume file: None

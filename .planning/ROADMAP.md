@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Authentication, tenant isolation, and architecture patterns that every subsequent phase depends on (completed 2026-03-25)
 - [x] **Phase 2: Page Tree** - Hierarchical page management with an optimistic sidebar and breadcrumb navigation (completed 2026-03-25)
 - [ ] **Phase 3: Block Editor** - Full TipTap block editor with auto-save, slash commands, and drag-and-drop reordering
-- [ ] **Phase 4: Search** - Full-text search across all pages in the current organization via PostgreSQL FTS
+- [x] **Phase 4: Search** - Full-text search across all pages in the current organization via PostgreSQL FTS (completed 2026-03-26)
 - [ ] **Phase 5: Org Management** - Organization creation, email invitations, role-based membership, and org switching
 - [ ] **Phase 6: Trash** - Soft delete with trash drawer, restore, and permanent deletion
 - [ ] **Phase 7: Polish and CI/CD** - Dark mode, rate limiting, full Vitest and Playwright suites, CI/CD pipeline hardening
@@ -90,11 +90,11 @@ Plans:
   1. User can open a search bar via Cmd+K or a visible search control and type a query
   2. Search results show matching page titles and content excerpts from pages in the current organization only
   3. Search returns results quickly using a PostgreSQL GIN index — no sequential scans on the pages table
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md — TDD: search schema, repository, service, server action, GIN index migration
-- [ ] 04-02-PLAN.md — SearchPalette UI component, sidebar integration, visual checkpoint
+- [x] 04-02-PLAN.md — SearchPalette UI component, sidebar integration, visual checkpoint
 
 **UI hint**: yes
 
@@ -153,7 +153,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation | 5/5 | Complete    | 2026-03-25 |
 | 2. Page Tree | 4/4 | Complete   | 2026-03-25 |
 | 3. Block Editor | 2/3 | In Progress|  |
-| 4. Search | 0/2 | Not started | - |
+| 4. Search | 2/2 | Complete   | 2026-03-26 |
 | 5. Org Management | 0/4 | Not started | - |
 | 6. Trash | 0/? | Not started | - |
 | 7. Polish and CI/CD | 0/? | Not started | - |

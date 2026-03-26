@@ -117,7 +117,8 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange} aria-label="Search pages">
       <DialogContent
-        className="p-0 max-w-xl gap-0 top-[10vh] translate-y-0"
+        className="p-0 max-w-xl gap-0 translate-y-0 border-input overflow-hidden"
+        style={{ top: '10vh' }}
         showCloseButton={false}
         onKeyDown={handleKeyDown}
         aria-label="Search pages"
@@ -125,10 +126,10 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
         <DialogTitle className="sr-only">Search pages</DialogTitle>
         <DialogDescription className="sr-only">Search through your workspace pages</DialogDescription>
         {/* Input area */}
-        <div className="flex items-center gap-2 px-4 border-b">
+        <div className={`flex items-center gap-2 px-2 py-1 ${loading || error || query.length >= 2 ? 'border-b' : ''}`}>
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
           <Input
-            className="border-0 focus-visible:ring-0 h-11 text-sm px-0 shadow-none"
+            className="border-0 focus-visible:ring-0 h-11 text-sm px-0 shadow-none px-2"
             placeholder="Search pages..."
             value={query}
             onChange={handleInputChange}
@@ -138,8 +139,8 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
           />
         </div>
 
-        {/* Results area */}
-        <div role="listbox" className="max-h-[352px] overflow-y-auto py-2">
+        {/* Results area — only rendered when there is content to show */}
+        {(loading || error || query.length >= 2) && <div role="listbox" className="max-h-[352px] overflow-y-auto py-2">
           {loading && (
             <>
               <Skeleton className="h-11 w-full rounded-md mx-4 my-1" style={{ width: 'calc(100% - 2rem)' }} />
@@ -169,9 +170,8 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
                 key={result.id}
                 role="option"
                 aria-selected={index === highlightedIndex}
-                className={`flex items-start gap-2 px-4 min-h-[44px] cursor-pointer hover:bg-muted py-2 ${
-                  index === highlightedIndex ? 'border-l-2 border-primary bg-muted' : ''
-                }`}
+                className={`flex items-start gap-2 px-4 min-h-[44px] cursor-pointer hover:bg-muted py-2 ${index === highlightedIndex ? 'border-l-2 border-primary bg-muted' : ''
+                  }`}
                 onClick={() => navigateToResult(result)}
                 onMouseEnter={() => setHighlightedIndex(index)}
               >
@@ -192,7 +192,7 @@ export function SearchPalette({ open, onOpenChange }: SearchPaletteProps) {
                 </div>
               </div>
             ))}
-        </div>
+        </div>}
       </DialogContent>
     </Dialog>
   )
