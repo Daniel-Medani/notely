@@ -77,7 +77,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **SEC-01**: All user input is validated server-side with Zod before touching the database
 - [x] **SEC-02**: All database queries go through Prisma (no raw SQL with user input)
-- [ ] **SEC-03**: Auth and write endpoints are rate-limited (Upstash Redis)
+- [x] **SEC-03**: Auth and write endpoints are rate-limited (Upstash Redis)
 - [x] **SEC-04**: No secrets are exposed in client bundles
 - [x] **SEC-05**: Server Actions are wrapped with authentication and authorization checks
 - [x] **SEC-06**: API layer returns consistent error shapes without leaking stack traces
@@ -188,7 +188,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TNNT-04 | Phase 1 | Complete |
 | SEC-01 | Phase 1 | Complete |
 | SEC-02 | Phase 1 | Complete |
-| SEC-03 | Phase 7 | Pending |
+| SEC-03 | Phase 7 | Complete |
 | SEC-04 | Phase 1 | Complete |
 | SEC-05 | Phase 1 | Complete |
 | SEC-06 | Phase 1 | Complete |

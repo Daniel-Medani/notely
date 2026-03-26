@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 07
-stopped_at: Phase 7 UI-SPEC approved
-last_updated: "2026-03-26T23:24:07.855Z"
+status: Ready to execute
+stopped_at: Completed 07-02-PLAN.md
+last_updated: "2026-03-26T23:29:23.418Z"
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 25
-  completed_plans: 21
+  completed_plans: 24
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-24)
 ## Current Position
 
 Phase: 07 (polish-and-ci-cd) — EXECUTING
-Plan: 1 of 4
+Plan: 2 of 4
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Plan: 1 of 4
 | Phase 06-trash P02 | 2 | 1 tasks | 3 files |
 | Phase 06-trash P03 | 12 | 2 tasks | 3 files |
 | Phase 06-trash P03 | 28 | 3 tasks | 3 files |
+| Phase 07-polish-and-ci-cd P02 | 525804 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -134,6 +135,9 @@ Recent decisions affecting current work:
 - [Phase 06-trash]: restorePageAction dual revalidatePath: /[org] layout (sidebar) + /[org]/trash page — both views need refresh after restore
 - [Phase 06-trash]: TrashList permanent-delete dialog uses single controlled AlertDialog with deleteTarget state (not one per row) — avoids DOM/portal overhead
 - [Phase 06-trash]: TrashList permanent-delete dialog uses single controlled AlertDialog with deleteTarget state (not one per row) — avoids DOM/portal overhead
+- [Phase 07-polish-and-ci-cd]: Rate limit on user ID (not IP) for write mutations — authenticated, user-scoped, consistent with verifySession() already called first
+- [Phase 07-polish-and-ci-cd]: checkRateLimit is a shared helper in ratelimit.ts not inlined per-action — single source of truth for RATE_LIMITED error shape
+- [Phase 07-polish-and-ci-cd]: Env guard returns null when UPSTASH_REDIS_REST_URL is absent — rate limiting skipped gracefully in local dev and CI without Upstash credentials
 
 ### Pending Todos
 
@@ -146,6 +150,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T22:45:25.436Z
-Stopped at: Phase 7 UI-SPEC approved
-Resume file: .planning/phases/07-polish-and-ci-cd/07-UI-SPEC.md
+Last session: 2026-03-26T23:29:23.415Z
+Stopped at: Completed 07-02-PLAN.md
+Resume file: None
