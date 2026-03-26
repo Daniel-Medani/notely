@@ -120,3 +120,58 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* TipTap editor — placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  @apply text-muted-foreground italic pointer-events-none float-left h-0;
+}
+
+/* TipTap editor — headings (all map to the 4-size type scale) */
+.tiptap h1 { @apply text-[28px] font-semibold leading-tight mt-6 mb-2; }
+.tiptap h2 { @apply text-[20px] font-semibold leading-snug mt-5 mb-2; }
+.tiptap h3 { @apply text-base font-semibold leading-snug mt-4 mb-1; }
+
+/* TipTap editor — paragraph */
+.tiptap p { @apply text-base leading-relaxed my-1; }
+
+/* TipTap editor — blockquote */
+.tiptap blockquote {
+  @apply border-l-[3px] border-border pl-4 text-muted-foreground italic my-3;
+}
+
+/* TipTap editor — horizontal rule */
+.tiptap hr { @apply border-border my-6; }
+
+/* TipTap editor — code block */
+.tiptap pre {
+  @apply bg-muted rounded-md p-4 my-3 font-mono text-sm leading-relaxed overflow-x-auto;
+}
+.tiptap code { @apply font-mono text-sm; }
+
+/* TipTap editor — inline code */
+.tiptap p code {
+  @apply bg-muted rounded px-1 py-1 text-sm font-mono;
+}
+
+/* TipTap editor — bullet and numbered lists */
+.tiptap ul { @apply list-disc pl-6 my-2 space-y-1; }
+.tiptap ol { @apply list-decimal pl-6 my-2 space-y-1; }
+
+/* TipTap editor — task list */
+.tiptap ul[data-type="taskList"] { @apply list-none pl-0 my-2 space-y-1; }
+.tiptap ul[data-type="taskList"] li { @apply flex items-start gap-2; }
+.tiptap ul[data-type="taskList"] li[data-checked="true"] > div {
+  @apply line-through text-muted-foreground;
+}
+
+/* TipTap editor — image */
+.tiptap img { @apply max-w-full rounded-md my-3; }
+
+/* TipTap editor — drag handle (community extension appends its own wrapper) */
+.drag-handle {
+  @apply opacity-0 transition-opacity duration-150 cursor-grab text-muted-foreground;
+}
+.drag-handle:hover { @apply text-foreground; }
+.ProseMirror:hover .drag-handle,
+.drag-handle:hover { @apply opacity-100; }
