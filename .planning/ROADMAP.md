@@ -73,10 +73,10 @@ Plans:
   3. Editor content saves automatically via debounce — no manual save button exists — and content is not lost when the tab is closed
   4. Standard keyboard shortcuts (Cmd+B, Cmd+I, Cmd+U, etc.) apply formatting as expected
   5. Content is stored as JSON and sanitized before storage — no `javascript:` URLs can be injected via link or image embeds
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 03-01-PLAN.md — TDD: sanitizeContent, pageContentSchema, PageService.updateContent, updatePageContentAction
+- [x] 03-01-PLAN.md — TDD: sanitizeContent, pageContentSchema, PageService.updateContent, updatePageContentAction
 - [x] 03-02-PLAN.md — Install TipTap packages, editor CSS, slash command extension and list component
 - [ ] 03-03-PLAN.md — BlockEditor component with autosave, wire into page route, visual checkpoint
 
@@ -90,7 +90,12 @@ Plans:
   1. User can open a search bar via Cmd+K or a visible search control and type a query
   2. Search results show matching page titles and content excerpts from pages in the current organization only
   3. Search returns results quickly using a PostgreSQL GIN index — no sequential scans on the pages table
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — TDD: search schema, repository, service, server action, GIN index migration
+- [ ] 04-02-PLAN.md — SearchPalette UI component, sidebar integration, visual checkpoint
+
 **UI hint**: yes
 
 ### Phase 5: Org Management
@@ -140,8 +145,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 |-------|----------------|--------|-----------|
 | 1. Foundation | 5/5 | Complete    | 2026-03-25 |
 | 2. Page Tree | 4/4 | Complete   | 2026-03-25 |
-| 3. Block Editor | 1/3 | In Progress|  |
-| 4. Search | 0/? | Not started | - |
+| 3. Block Editor | 2/3 | In Progress|  |
+| 4. Search | 0/2 | Not started | - |
 | 5. Org Management | 0/? | Not started | - |
 | 6. Trash | 0/? | Not started | - |
 | 7. Polish and CI/CD | 0/? | Not started | - |
