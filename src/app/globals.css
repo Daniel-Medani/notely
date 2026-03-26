@@ -166,6 +166,7 @@
 .tiptap ul[data-type="taskList"] li { @apply flex items-start gap-2; }
 .tiptap ul[data-type="taskList"] li > label {
   @apply flex shrink-0;
+  align-self: center;
   user-select: none;
 }
 .tiptap ul[data-type="taskList"] li > label input[type="checkbox"] {
@@ -173,7 +174,7 @@
   appearance: none;
   -webkit-appearance: none;
   @apply h-4 w-4 cursor-pointer rounded-sm shrink-0;
-  border: 2px solid var(--border);
+  border: 2px solid color-mix(in oklab, var(--foreground) 40%, transparent);
   background-color: transparent;
   position: relative;
   transition: background-color 0.1s, border-color 0.1s;
