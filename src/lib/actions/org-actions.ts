@@ -12,6 +12,7 @@ import {
   orgMemberRoleSchema,
   orgRemoveMemberSchema,
 } from '@/lib/schemas/org'
+import { checkRateLimit } from '@/lib/ratelimit'
 
 /**
  * Converts a human-readable name to a URL-safe slug.
@@ -47,6 +48,7 @@ export async function createOrgAction(
 ): Promise<ActionResult<{ slug: string }>> {
   try {
     const session = await verifySession()
+    await checkRateLimit(session.user.id)
     const parsed = orgCreateSchema.parse(input)
     const slug = `${slugify(parsed.name)}-${crypto.randomUUID().slice(0, 4)}`
     await auth.api.createOrganization({
@@ -66,6 +68,7 @@ export async function createOrgAction(
 export async function inviteMemberAction(input: unknown): Promise<ActionResult<void>> {
   try {
     const session = await verifySession()
+    await checkRateLimit(session.user.id)
     const parsed = orgInviteSchema.parse(input)
     await assertAdminMembership(session.user.id, parsed.organizationId)
     await auth.api.createInvitation({
@@ -89,6 +92,7 @@ export async function inviteMemberAction(input: unknown): Promise<ActionResult<v
 export async function removeMemberAction(input: unknown): Promise<ActionResult<void>> {
   try {
     const session = await verifySession()
+    await checkRateLimit(session.user.id)
     const parsed = orgRemoveMemberSchema.parse(input)
     await assertAdminMembership(session.user.id, parsed.organizationId)
     await auth.api.removeMember({
@@ -112,6 +116,7 @@ export async function removeMemberAction(input: unknown): Promise<ActionResult<v
 export async function updateMemberRoleAction(input: unknown): Promise<ActionResult<void>> {
   try {
     const session = await verifySession()
+    await checkRateLimit(session.user.id)
     const parsed = orgMemberRoleSchema.parse(input)
     await assertAdminMembership(session.user.id, parsed.organizationId)
     await auth.api.updateMemberRole({
@@ -137,7 +142,8 @@ export async function acceptInvitationAction(
   invitationId: string,
 ): Promise<ActionResult<{ orgSlug: string }>> {
   try {
-    await verifySession()
+    const session = await verifySession()
+    await checkRateLimit(session.user.id)
     await auth.api.acceptInvitation({
       body: { invitationId },
       headers: await headers(),
