@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { PanelLeft, PanelRight, Plus, Search } from 'lucide-react'
+import { PanelLeft, PanelRight, Plus, Search, Settings } from 'lucide-react'
+import Link from 'next/link'
 import { UserMenu } from './user-menu'
 import { PageTree } from './page-tree'
 import { usePageMutations } from '@/hooks/use-page-mutations'
 import { SearchPalette } from './search-palette'
 import { OrgSwitcher } from './org-switcher'
+import { useWorkspace } from './workspace-layout'
 
 interface SidebarProps {
   userName: string
@@ -21,6 +23,7 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const { createPage } = usePageMutations()
+  const { orgSlug } = useWorkspace()
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -66,8 +69,8 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
 
         <Separator />
 
-        {/* New Page CTA */}
-        <div className="px-2 py-2">
+        {/* Bottom actions */}
+        <div className="px-2 py-2 space-y-1">
           <Button
             variant="ghost"
             className="w-full justify-start gap-2"
@@ -76,6 +79,12 @@ export function Sidebar({ userName, userImage, orgName, orgs }: SidebarProps) {
             <Plus className="h-4 w-4" />
             New Page
           </Button>
+          <Link href={`/${orgSlug}/settings/members`}>
+            <Button variant="ghost" className="w-full justify-start gap-2">
+              <Settings className="h-4 w-4" />
+              Settings
+            </Button>
+          </Link>
         </div>
 
         {/* Bottom: User menu */}
