@@ -54,6 +54,41 @@ function createMockRepo(): IPageRepository & {
       const index = pages.findIndex(p => p.id === id && p.organizationId === organizationId)
       if (index !== -1) pages.splice(index, 1)
     }),
+
+    findAllTrashed: vi.fn(async (organizationId: string): Promise<PageRecord[]> => {
+      return pages.filter(p => p.organizationId === organizationId && p.isDeleted)
+    }),
+
+    softDeleteMany: vi.fn(async (ids: string[], organizationId: string): Promise<void> => {
+      ids.forEach(id => {
+        const p = pages.find(pg => pg.id === id && pg.organizationId === organizationId)
+        if (p) p.isDeleted = true
+      })
+    }),
+
+    restoreMany: vi.fn(async (ids: string[], organizationId: string, newParentId: string | null, rootId: string): Promise<void> => {
+      ids.forEach(id => {
+        const p = pages.find(pg => pg.id === id && pg.organizationId === organizationId)
+        if (p) {
+          p.isDeleted = false
+          if (p.id === rootId) p.parentId = newParentId
+        }
+      })
+    }),
+
+    permanentlyDeleteMany: vi.fn(async (ids: string[], organizationId: string): Promise<void> => {
+      const toRemove = ids.filter(id => pages.some(p => p.id === id && p.organizationId === organizationId))
+      toRemove.forEach(id => {
+        const idx = pages.findIndex(p => p.id === id)
+        if (idx !== -1) pages.splice(idx, 1)
+      })
+    }),
+
+    emptyTrash: vi.fn(async (organizationId: string): Promise<void> => {
+      for (let i = pages.length - 1; i >= 0; i--) {
+        if (pages[i].organizationId === organizationId && pages[i].isDeleted) pages.splice(i, 1)
+      }
+    }),
   }
 
   return repo
@@ -139,11 +174,11 @@ describe('PageService', () => {
   })
 
   describe('deletePage', () => {
-    it('soft-deletes the page by calling update with isDeleted: true (not delete)', async () => {
+    it('cascade soft-deletes a leaf page by calling softDeleteMany with its own id', async () => {
       repo._pages.push({
-        id: 'page-1',
+        id: 'leaf-1',
         organizationId: ORG_ID,
-        title: 'To Delete',
+        title: 'Leaf Page',
         emoji: null,
         content: null,
         order: 1.0,
@@ -153,15 +188,136 @@ describe('PageService', () => {
         parentId: null,
       })
 
-      await service.deletePage('page-1', ORG_ID)
-      expect(repo.update).toHaveBeenCalledWith('page-1', { isDeleted: true }, ORG_ID)
+      await service.deletePage('leaf-1', ORG_ID)
+      expect(repo.softDeleteMany).toHaveBeenCalledWith(['leaf-1'], ORG_ID)
       expect(repo.delete).not.toHaveBeenCalled()
+    })
+
+    it('cascade soft-deletes parent and all descendants', async () => {
+      // parent-1 -> child-1 -> gc-1
+      //           -> child-2
+      repo._pages.push(
+        { id: 'parent-1', organizationId: ORG_ID, title: 'Parent', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'child-1', organizationId: ORG_ID, title: 'Child 1', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-1' },
+        { id: 'gc-1', organizationId: ORG_ID, title: 'Grandchild 1', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'child-1' },
+        { id: 'child-2', organizationId: ORG_ID, title: 'Child 2', emoji: null, content: null, order: 2.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-1' },
+      )
+
+      await service.deletePage('parent-1', ORG_ID)
+      const call = (repo.softDeleteMany as ReturnType<typeof vi.fn>).mock.calls[0]
+      expect(call[1]).toBe(ORG_ID)
+      // All 4 IDs must be present (BFS order: parent-1, child-1, child-2, gc-1)
+      expect(call[0]).toHaveLength(4)
+      expect(call[0]).toContain('parent-1')
+      expect(call[0]).toContain('child-1')
+      expect(call[0]).toContain('child-2')
+      expect(call[0]).toContain('gc-1')
     })
 
     it('throws PAGE_NOT_FOUND when page does not exist', async () => {
       await expect(service.deletePage('nonexistent', ORG_ID)).rejects.toMatchObject({
         code: 'PAGE_NOT_FOUND',
       })
+    })
+  })
+
+  describe('listTrashedPages', () => {
+    it('delegates to repo.findAllTrashed and returns only deleted pages', async () => {
+      repo._pages.push(
+        { id: 'active-1', organizationId: ORG_ID, title: 'Active', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'deleted-1', organizationId: ORG_ID, title: 'Deleted', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+      )
+
+      const result = await service.listTrashedPages(ORG_ID)
+      expect(repo.findAllTrashed).toHaveBeenCalledWith(ORG_ID)
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe('deleted-1')
+    })
+  })
+
+  describe('restorePage', () => {
+    it('restores page and descendants when parent is not deleted', async () => {
+      repo._pages.push(
+        { id: 'parent-active', organizationId: ORG_ID, title: 'Active Parent', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'page-1', organizationId: ORG_ID, title: 'To Restore', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-active' },
+        { id: 'child-of-page-1', organizationId: ORG_ID, title: 'Trashed Child', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'page-1' },
+      )
+
+      await service.restorePage('page-1', ORG_ID)
+      expect(repo.restoreMany).toHaveBeenCalledWith(
+        expect.arrayContaining(['page-1', 'child-of-page-1']),
+        ORG_ID,
+        'parent-active',
+        'page-1',
+      )
+    })
+
+    it('re-parents to root when original parent is trashed (D-09)', async () => {
+      repo._pages.push(
+        { id: 'deleted-parent', organizationId: ORG_ID, title: 'Deleted Parent', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'page-1', organizationId: ORG_ID, title: 'To Restore', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'deleted-parent' },
+      )
+
+      await service.restorePage('page-1', ORG_ID)
+      expect(repo.restoreMany).toHaveBeenCalledWith(
+        expect.arrayContaining(['page-1']),
+        ORG_ID,
+        null,
+        'page-1',
+      )
+    })
+
+    it('keeps null parentId when page has no parent', async () => {
+      repo._pages.push(
+        { id: 'page-1', organizationId: ORG_ID, title: 'Root Page', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+      )
+
+      await service.restorePage('page-1', ORG_ID)
+      expect(repo.restoreMany).toHaveBeenCalledWith(
+        expect.arrayContaining(['page-1']),
+        ORG_ID,
+        null,
+        'page-1',
+      )
+    })
+
+    it('throws PAGE_NOT_FOUND when page does not exist', async () => {
+      await expect(service.restorePage('nonexistent', ORG_ID)).rejects.toMatchObject({
+        code: 'PAGE_NOT_FOUND',
+      })
+    })
+  })
+
+  describe('permanentlyDeletePage', () => {
+    it('permanently deletes page and all trashed descendants', async () => {
+      repo._pages.push(
+        { id: 'page-1', organizationId: ORG_ID, title: 'Trashed', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'child-1', organizationId: ORG_ID, title: 'Trashed Child', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'page-1' },
+      )
+
+      await service.permanentlyDeletePage('page-1', ORG_ID)
+      const call = (repo.permanentlyDeleteMany as ReturnType<typeof vi.fn>).mock.calls[0]
+      expect(call[1]).toBe(ORG_ID)
+      expect(call[0]).toContain('page-1')
+      expect(call[0]).toContain('child-1')
+    })
+
+    it('throws PAGE_NOT_FOUND when page does not exist', async () => {
+      await expect(service.permanentlyDeletePage('nonexistent', ORG_ID)).rejects.toMatchObject({
+        code: 'PAGE_NOT_FOUND',
+      })
+    })
+  })
+
+  describe('emptyTrash', () => {
+    it('delegates to repo.emptyTrash with the organization id', async () => {
+      repo._pages.push(
+        { id: 'trash-1', organizationId: ORG_ID, title: 'Trash 1', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        { id: 'trash-2', organizationId: ORG_ID, title: 'Trash 2', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+      )
+
+      await service.emptyTrash(ORG_ID)
+      expect(repo.emptyTrash).toHaveBeenCalledWith(ORG_ID)
     })
   })
 

@@ -127,7 +127,13 @@ Plans:
   2. User can view all trashed pages for the current organization in a dedicated trash view
   3. User can restore a trashed page and it reappears in the sidebar at its original location
   4. User can permanently delete a trashed page and it is gone from the database
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — TDD: IPageRepository extension, PageService trash lifecycle (cascade delete, restore, permanent delete, empty trash)
+- [ ] 06-02-PLAN.md — Zod schemas, Server Actions, and action tests for trash operations
+- [ ] 06-03-PLAN.md — Trash UI: route page, TrashList component, sidebar link, visual checkpoint
+
 **UI hint**: yes
 
 ### Phase 7: Polish and CI/CD
@@ -155,5 +161,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Block Editor | 2/3 | In Progress|  |
 | 4. Search | 2/2 | Complete   | 2026-03-26 |
 | 5. Org Management | 4/4 | Complete   | 2026-03-26 |
-| 6. Trash | 0/? | Not started | - |
+| 6. Trash | 0/3 | Not started | - |
 | 7. Polish and CI/CD | 0/? | Not started | - |

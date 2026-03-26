@@ -31,4 +31,9 @@ export interface PageRecord {
 
 export interface IPageRepository extends IRepository<PageRecord, CreatePageData, UpdatePageData> {
   findAllForOrg(organizationId: string): Promise<PageRecord[]>
+  findAllTrashed(organizationId: string): Promise<PageRecord[]>
+  softDeleteMany(ids: string[], organizationId: string): Promise<void>
+  restoreMany(ids: string[], organizationId: string, newParentId: string | null, rootId: string): Promise<void>
+  permanentlyDeleteMany(ids: string[], organizationId: string): Promise<void>
+  emptyTrash(organizationId: string): Promise<void>
 }
