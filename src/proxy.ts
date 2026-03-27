@@ -6,7 +6,9 @@ const AUTH_ROUTES = ['/login', '/register']
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const sessionCookie = request.cookies.get('better-auth.session_token')
+  const sessionCookie =
+    request.cookies.get('__Secure-better-auth.session_token') ||
+    request.cookies.get('better-auth.session_token')
 
   const isPublicRoute = PUBLIC_ROUTES.some((r) => pathname.startsWith(r))
   const isAuthRoute = AUTH_ROUTES.some((r) => pathname.startsWith(r))
