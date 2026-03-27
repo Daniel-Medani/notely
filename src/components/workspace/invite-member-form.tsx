@@ -76,13 +76,9 @@ export function InviteMemberForm({ organizationId }: InviteMemberFormProps) {
             </Button>
           </div>
           {successEmail && (
-            <p className="mt-2 text-sm text-muted-foreground">
-              Invitation sent to {successEmail}
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">Invitation sent to {successEmail}</p>
           )}
-          {serverError && (
-            <p className="mt-2 text-sm text-destructive">{serverError}</p>
-          )}
+          {serverError && <p className="mt-2 text-sm text-destructive">{serverError}</p>}
         </form>
       </Form>
     </div>

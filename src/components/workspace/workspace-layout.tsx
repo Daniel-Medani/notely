@@ -26,7 +26,15 @@ interface WorkspaceLayoutProps {
   children: React.ReactNode
 }
 
-export function WorkspaceLayout({ userName, userImage, organizationId, orgSlug, orgName, orgs, children }: WorkspaceLayoutProps) {
+export function WorkspaceLayout({
+  userName,
+  userImage,
+  organizationId,
+  orgSlug,
+  orgName,
+  orgs,
+  children,
+}: WorkspaceLayoutProps) {
   return (
     <WorkspaceContext.Provider value={{ organizationId, orgSlug }}>
       <div className="flex h-screen overflow-hidden">

@@ -40,7 +40,14 @@ const mockFindFirst = vi.mocked(prisma.member.findFirst)
 
 const VALID_SESSION = {
   user: { id: 'user-1', name: 'Test User', email: 'test@example.com', emailVerified: true },
-  session: { id: 'session-1', token: 'token', userId: 'user-1', expiresAt: new Date(), createdAt: new Date(), updatedAt: new Date() },
+  session: {
+    id: 'session-1',
+    token: 'token',
+    userId: 'user-1',
+    expiresAt: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 }
 
 const VALID_MEMBER = {

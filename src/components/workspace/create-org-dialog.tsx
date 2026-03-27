@@ -68,9 +68,7 @@ export function CreateOrgDialog({ open, onOpenChange }: CreateOrgDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create organization</DialogTitle>
-          <DialogDescription>
-            Create a new workspace for your team.
-          </DialogDescription>
+          <DialogDescription>Create a new workspace for your team.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -88,12 +86,7 @@ export function CreateOrgDialog({ open, onOpenChange }: CreateOrgDialogProps) {
               )}
             />
             <div className="flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={handleDiscard}
-                disabled={isSubmitting}
-              >
+              <Button type="button" variant="ghost" onClick={handleDiscard} disabled={isSubmitting}>
                 Discard
               </Button>
               <Button type="submit" disabled={isSubmitting}>

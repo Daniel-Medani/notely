@@ -1,6 +1,11 @@
 import 'server-only'
 import { prisma } from '@/lib/db'
-import type { IPageRepository, CreatePageData, UpdatePageData, PageRecord } from '../interfaces/IPageRepository'
+import type {
+  IPageRepository,
+  CreatePageData,
+  UpdatePageData,
+  PageRecord,
+} from '../interfaces/IPageRepository'
 
 export class PrismaPageRepository implements IPageRepository {
   async findById(id: string, organizationId: string): Promise<PageRecord | null> {
@@ -67,7 +72,12 @@ export class PrismaPageRepository implements IPageRepository {
     })
   }
 
-  async restoreMany(ids: string[], organizationId: string, newParentId: string | null, rootId: string): Promise<void> {
+  async restoreMany(
+    ids: string[],
+    organizationId: string,
+    newParentId: string | null,
+    rootId: string,
+  ): Promise<void> {
     await prisma.page.updateMany({
       where: { id: { in: ids }, organizationId },
       data: { isDeleted: false },

@@ -47,7 +47,11 @@ describe('pageCreateSchema', () => {
 
 describe('pageRenameSchema', () => {
   it('accepts valid organizationId, id, and title', () => {
-    const result = pageRenameSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', title: 'My Page' })
+    const result = pageRenameSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      title: 'My Page',
+    })
     expect(result.success).toBe(true)
   })
 
@@ -75,7 +79,11 @@ describe('pageRenameSchema', () => {
   })
 
   it('rejects title longer than 255 characters', () => {
-    const result = pageRenameSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', title: 'a'.repeat(256) })
+    const result = pageRenameSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      title: 'a'.repeat(256),
+    })
     expect(result.success).toBe(false)
     if (!result.success) {
       const titleError = result.error.issues.find((i) => i.path.includes('title'))
@@ -84,19 +92,31 @@ describe('pageRenameSchema', () => {
   })
 
   it('accepts title of exactly 255 characters', () => {
-    const result = pageRenameSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', title: 'a'.repeat(255) })
+    const result = pageRenameSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      title: 'a'.repeat(255),
+    })
     expect(result.success).toBe(true)
   })
 })
 
 describe('pageMoveSchema', () => {
   it('accepts valid organizationId, id, and null parentId', () => {
-    const result = pageMoveSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', parentId: null })
+    const result = pageMoveSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      parentId: null,
+    })
     expect(result.success).toBe(true)
   })
 
   it('accepts valid organizationId, id, and string parentId', () => {
-    const result = pageMoveSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', parentId: 'clyyy456' })
+    const result = pageMoveSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      parentId: 'clyyy456',
+    })
     expect(result.success).toBe(true)
   })
 
@@ -121,12 +141,20 @@ describe('pageMoveSchema', () => {
 
 describe('pageEmojiSchema', () => {
   it('accepts valid organizationId, id, and emoji string', () => {
-    const result = pageEmojiSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', emoji: '📄' })
+    const result = pageEmojiSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      emoji: '📄',
+    })
     expect(result.success).toBe(true)
   })
 
   it('accepts null emoji (removal)', () => {
-    const result = pageEmojiSchema.safeParse({ organizationId: ORG_ID, id: 'clxxx123', emoji: null })
+    const result = pageEmojiSchema.safeParse({
+      organizationId: ORG_ID,
+      id: 'clxxx123',
+      emoji: null,
+    })
     expect(result.success).toBe(true)
   })
 

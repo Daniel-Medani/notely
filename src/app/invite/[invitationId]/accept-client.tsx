@@ -43,16 +43,10 @@ export function AcceptInvitationClient({
 
   return (
     <>
-      <Button
-        onClick={handleAccept}
-        disabled={isLoading}
-        aria-busy={isLoading}
-      >
+      <Button onClick={handleAccept} disabled={isLoading} aria-busy={isLoading}>
         {isLoading ? 'Accepting...' : 'Accept Invitation'}
       </Button>
-      {error && (
-        <p className="text-sm text-destructive text-center">{error}</p>
-      )}
+      {error && <p className="text-sm text-destructive text-center">{error}</p>}
     </>
   )
 }

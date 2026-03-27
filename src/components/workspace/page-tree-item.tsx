@@ -2,7 +2,15 @@
 
 import { useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { ChevronRight, FileText, Plus, MoreHorizontal, Pencil, ArrowRight, Trash2 } from 'lucide-react'
+import {
+  ChevronRight,
+  FileText,
+  Plus,
+  MoreHorizontal,
+  Pencil,
+  ArrowRight,
+  Trash2,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -58,12 +66,12 @@ export function PageTreeItem({ node, depth, mutations }: PageTreeItemProps) {
     while (queue.length > 0) {
       const current = queue.shift()!
       result.add(current)
-      pages.filter(p => p.parentId === current).forEach(p => queue.push(p.id))
+      pages.filter((p) => p.parentId === current).forEach((p) => queue.push(p.id))
     }
     return result
   }
 
-  const moveTargets = allPages.filter(p => {
+  const moveTargets = allPages.filter((p) => {
     const descendants = getDescendantIds(node.id, allPages)
     return !descendants.has(p.id)
   })
@@ -215,7 +223,7 @@ export function PageTreeItem({ node, depth, mutations }: PageTreeItemProps) {
             >
               Root (no parent)
             </button>
-            {moveTargets.map(page => (
+            {moveTargets.map((page) => (
               <button
                 key={page.id}
                 className="flex w-full items-center rounded-sm px-2 py-1.5 text-sm hover:bg-muted"
@@ -232,13 +240,8 @@ export function PageTreeItem({ node, depth, mutations }: PageTreeItemProps) {
       {/* Children (recursive) */}
       {expanded && hasChildren && (
         <div>
-          {node.children.map(child => (
-            <PageTreeItem
-              key={child.id}
-              node={child}
-              depth={depth + 1}
-              mutations={mutations}
-            />
+          {node.children.map((child) => (
+            <PageTreeItem key={child.id} node={child} depth={depth + 1} mutations={mutations} />
           ))}
         </div>
       )}

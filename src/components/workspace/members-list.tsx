@@ -52,9 +52,7 @@ export function MembersList({
 
   async function handleRoleChange(memberId: string, newRole: 'admin' | 'member') {
     startTransition(async () => {
-      applyOptimistic((prev) =>
-        prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m)),
-      )
+      applyOptimistic((prev) => prev.map((m) => (m.id === memberId ? { ...m, role: newRole } : m)))
       const result = await updateMemberRoleAction({ organizationId, memberId, role: newRole })
       if (result.success) {
         toast.success(`Role updated to ${newRole === 'admin' ? 'Admin' : 'Member'}.`)
@@ -127,10 +125,7 @@ export function MembersList({
                     <DropdownMenuContent>
                       <DropdownMenuItem
                         onClick={() =>
-                          handleRoleChange(
-                            member.id,
-                            isOwnerOrAdmin ? 'member' : 'admin',
-                          )
+                          handleRoleChange(member.id, isOwnerOrAdmin ? 'member' : 'admin')
                         }
                       >
                         {isOwnerOrAdmin ? 'Change role to Member' : 'Change role to Admin'}
@@ -156,8 +151,8 @@ export function MembersList({
           <AlertDialogHeader>
             <AlertDialogTitle>Remove member?</AlertDialogTitle>
             <AlertDialogDescription>
-              Remove {removeTarget?.user.name} from {organizationName}? They will lose access to
-              all pages immediately.
+              Remove {removeTarget?.user.name} from {organizationName}? They will lose access to all
+              pages immediately.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

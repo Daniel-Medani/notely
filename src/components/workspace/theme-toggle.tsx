@@ -10,6 +10,7 @@ export function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 
@@ -26,11 +27,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       aria-label={resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {resolvedTheme === 'dark' ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
+      {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
   )
 }

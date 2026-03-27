@@ -70,9 +70,7 @@ export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
   return (
     <Card className="w-full max-w-sm">
       <CardContent className="p-8">
-        <p className="text-[28px] font-semibold leading-[1.15] text-center mb-8">
-          Notely
-        </p>
+        <p className="text-[28px] font-semibold leading-[1.15] text-center mb-8">Notely</p>
         <h1 className="text-[20px] font-semibold leading-[1.2] text-center mb-6">
           Sign in to Notely
         </h1>
@@ -145,11 +143,7 @@ export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      disabled={isLoading}
-                      {...field}
-                    />
+                    <Input type="password" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -162,11 +156,7 @@ export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
               </p>
             )}
 
-            <Button
-              type="submit"
-              className="w-full mt-6"
-              disabled={isLoading}
-            >
+            <Button type="submit" className="w-full mt-6" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

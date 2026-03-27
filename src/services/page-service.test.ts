@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { PageService } from './page-service'
-import type { IPageRepository, PageRecord, CreatePageData, UpdatePageData } from '@/repositories/interfaces/IPageRepository'
+import type {
+  IPageRepository,
+  PageRecord,
+  CreatePageData,
+  UpdatePageData,
+} from '@/repositories/interfaces/IPageRepository'
 
 // In-memory mock repository
 function createMockRepo(): IPageRepository & {
@@ -12,16 +17,16 @@ function createMockRepo(): IPageRepository & {
     _pages: pages,
 
     findById: vi.fn(async (id: string, organizationId: string): Promise<PageRecord | null> => {
-      return pages.find(p => p.id === id && p.organizationId === organizationId) ?? null
+      return pages.find((p) => p.id === id && p.organizationId === organizationId) ?? null
     }),
 
     findAll: vi.fn(async (organizationId: string): Promise<PageRecord[]> => {
-      return pages.filter(p => p.organizationId === organizationId)
+      return pages.filter((p) => p.organizationId === organizationId)
     }),
 
     findAllForOrg: vi.fn(async (organizationId: string): Promise<PageRecord[]> => {
       return pages
-        .filter(p => p.organizationId === organizationId && !p.isDeleted)
+        .filter((p) => p.organizationId === organizationId && !p.isDeleted)
         .sort((a, b) => a.order - b.order)
     }),
 
@@ -42,44 +47,55 @@ function createMockRepo(): IPageRepository & {
       return page
     }),
 
-    update: vi.fn(async (id: string, data: UpdatePageData, organizationId: string): Promise<PageRecord> => {
-      const index = pages.findIndex(p => p.id === id && p.organizationId === organizationId)
-      if (index === -1) throw new Error(`Page ${id} not found`)
-      const updated = { ...pages[index], ...data, updatedAt: new Date() }
-      pages[index] = updated
-      return updated
-    }),
+    update: vi.fn(
+      async (id: string, data: UpdatePageData, organizationId: string): Promise<PageRecord> => {
+        const index = pages.findIndex((p) => p.id === id && p.organizationId === organizationId)
+        if (index === -1) throw new Error(`Page ${id} not found`)
+        const updated = { ...pages[index], ...data, updatedAt: new Date() }
+        pages[index] = updated
+        return updated
+      },
+    ),
 
     delete: vi.fn(async (id: string, organizationId: string): Promise<void> => {
-      const index = pages.findIndex(p => p.id === id && p.organizationId === organizationId)
+      const index = pages.findIndex((p) => p.id === id && p.organizationId === organizationId)
       if (index !== -1) pages.splice(index, 1)
     }),
 
     findAllTrashed: vi.fn(async (organizationId: string): Promise<PageRecord[]> => {
-      return pages.filter(p => p.organizationId === organizationId && p.isDeleted)
+      return pages.filter((p) => p.organizationId === organizationId && p.isDeleted)
     }),
 
     softDeleteMany: vi.fn(async (ids: string[], organizationId: string): Promise<void> => {
-      ids.forEach(id => {
-        const p = pages.find(pg => pg.id === id && pg.organizationId === organizationId)
+      ids.forEach((id) => {
+        const p = pages.find((pg) => pg.id === id && pg.organizationId === organizationId)
         if (p) p.isDeleted = true
       })
     }),
 
-    restoreMany: vi.fn(async (ids: string[], organizationId: string, newParentId: string | null, rootId: string): Promise<void> => {
-      ids.forEach(id => {
-        const p = pages.find(pg => pg.id === id && pg.organizationId === organizationId)
-        if (p) {
-          p.isDeleted = false
-          if (p.id === rootId) p.parentId = newParentId
-        }
-      })
-    }),
+    restoreMany: vi.fn(
+      async (
+        ids: string[],
+        organizationId: string,
+        newParentId: string | null,
+        rootId: string,
+      ): Promise<void> => {
+        ids.forEach((id) => {
+          const p = pages.find((pg) => pg.id === id && pg.organizationId === organizationId)
+          if (p) {
+            p.isDeleted = false
+            if (p.id === rootId) p.parentId = newParentId
+          }
+        })
+      },
+    ),
 
     permanentlyDeleteMany: vi.fn(async (ids: string[], organizationId: string): Promise<void> => {
-      const toRemove = ids.filter(id => pages.some(p => p.id === id && p.organizationId === organizationId))
-      toRemove.forEach(id => {
-        const idx = pages.findIndex(p => p.id === id)
+      const toRemove = ids.filter((id) =>
+        pages.some((p) => p.id === id && p.organizationId === organizationId),
+      )
+      toRemove.forEach((id) => {
+        const idx = pages.findIndex((p) => p.id === id)
         if (idx !== -1) pages.splice(idx, 1)
       })
     }),
@@ -138,7 +154,7 @@ describe('PageService', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           parentId: null,
-        }
+        },
       )
 
       const page = await service.createPage(null, ORG_ID)
@@ -197,10 +213,54 @@ describe('PageService', () => {
       // parent-1 -> child-1 -> gc-1
       //           -> child-2
       repo._pages.push(
-        { id: 'parent-1', organizationId: ORG_ID, title: 'Parent', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'child-1', organizationId: ORG_ID, title: 'Child 1', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-1' },
-        { id: 'gc-1', organizationId: ORG_ID, title: 'Grandchild 1', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'child-1' },
-        { id: 'child-2', organizationId: ORG_ID, title: 'Child 2', emoji: null, content: null, order: 2.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-1' },
+        {
+          id: 'parent-1',
+          organizationId: ORG_ID,
+          title: 'Parent',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'child-1',
+          organizationId: ORG_ID,
+          title: 'Child 1',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'parent-1',
+        },
+        {
+          id: 'gc-1',
+          organizationId: ORG_ID,
+          title: 'Grandchild 1',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'child-1',
+        },
+        {
+          id: 'child-2',
+          organizationId: ORG_ID,
+          title: 'Child 2',
+          emoji: null,
+          content: null,
+          order: 2.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'parent-1',
+        },
       )
 
       await service.deletePage('parent-1', ORG_ID)
@@ -224,8 +284,30 @@ describe('PageService', () => {
   describe('listTrashedPages', () => {
     it('delegates to repo.findAllTrashed and returns only deleted pages', async () => {
       repo._pages.push(
-        { id: 'active-1', organizationId: ORG_ID, title: 'Active', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'deleted-1', organizationId: ORG_ID, title: 'Deleted', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        {
+          id: 'active-1',
+          organizationId: ORG_ID,
+          title: 'Active',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'deleted-1',
+          organizationId: ORG_ID,
+          title: 'Deleted',
+          emoji: null,
+          content: null,
+          order: 2.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
       )
 
       const result = await service.listTrashedPages(ORG_ID)
@@ -238,9 +320,42 @@ describe('PageService', () => {
   describe('restorePage', () => {
     it('restores page and descendants when parent is not deleted', async () => {
       repo._pages.push(
-        { id: 'parent-active', organizationId: ORG_ID, title: 'Active Parent', emoji: null, content: null, order: 1.0, isDeleted: false, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'page-1', organizationId: ORG_ID, title: 'To Restore', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'parent-active' },
-        { id: 'child-of-page-1', organizationId: ORG_ID, title: 'Trashed Child', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'page-1' },
+        {
+          id: 'parent-active',
+          organizationId: ORG_ID,
+          title: 'Active Parent',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'page-1',
+          organizationId: ORG_ID,
+          title: 'To Restore',
+          emoji: null,
+          content: null,
+          order: 2.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'parent-active',
+        },
+        {
+          id: 'child-of-page-1',
+          organizationId: ORG_ID,
+          title: 'Trashed Child',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'page-1',
+        },
       )
 
       await service.restorePage('page-1', ORG_ID)
@@ -254,8 +369,30 @@ describe('PageService', () => {
 
     it('re-parents to root when original parent is trashed (D-09)', async () => {
       repo._pages.push(
-        { id: 'deleted-parent', organizationId: ORG_ID, title: 'Deleted Parent', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'page-1', organizationId: ORG_ID, title: 'To Restore', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'deleted-parent' },
+        {
+          id: 'deleted-parent',
+          organizationId: ORG_ID,
+          title: 'Deleted Parent',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'page-1',
+          organizationId: ORG_ID,
+          title: 'To Restore',
+          emoji: null,
+          content: null,
+          order: 2.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'deleted-parent',
+        },
       )
 
       await service.restorePage('page-1', ORG_ID)
@@ -268,9 +405,18 @@ describe('PageService', () => {
     })
 
     it('keeps null parentId when page has no parent', async () => {
-      repo._pages.push(
-        { id: 'page-1', organizationId: ORG_ID, title: 'Root Page', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-      )
+      repo._pages.push({
+        id: 'page-1',
+        organizationId: ORG_ID,
+        title: 'Root Page',
+        emoji: null,
+        content: null,
+        order: 1.0,
+        isDeleted: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        parentId: null,
+      })
 
       await service.restorePage('page-1', ORG_ID)
       expect(repo.restoreMany).toHaveBeenCalledWith(
@@ -291,8 +437,30 @@ describe('PageService', () => {
   describe('permanentlyDeletePage', () => {
     it('permanently deletes page and all trashed descendants', async () => {
       repo._pages.push(
-        { id: 'page-1', organizationId: ORG_ID, title: 'Trashed', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'child-1', organizationId: ORG_ID, title: 'Trashed Child', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: 'page-1' },
+        {
+          id: 'page-1',
+          organizationId: ORG_ID,
+          title: 'Trashed',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'child-1',
+          organizationId: ORG_ID,
+          title: 'Trashed Child',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: 'page-1',
+        },
       )
 
       await service.permanentlyDeletePage('page-1', ORG_ID)
@@ -312,8 +480,30 @@ describe('PageService', () => {
   describe('emptyTrash', () => {
     it('delegates to repo.emptyTrash with the organization id', async () => {
       repo._pages.push(
-        { id: 'trash-1', organizationId: ORG_ID, title: 'Trash 1', emoji: null, content: null, order: 1.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
-        { id: 'trash-2', organizationId: ORG_ID, title: 'Trash 2', emoji: null, content: null, order: 2.0, isDeleted: true, createdAt: new Date(), updatedAt: new Date(), parentId: null },
+        {
+          id: 'trash-1',
+          organizationId: ORG_ID,
+          title: 'Trash 1',
+          emoji: null,
+          content: null,
+          order: 1.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
+        {
+          id: 'trash-2',
+          organizationId: ORG_ID,
+          title: 'Trash 2',
+          emoji: null,
+          content: null,
+          order: 2.0,
+          isDeleted: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          parentId: null,
+        },
       )
 
       await service.emptyTrash(ORG_ID)
@@ -482,7 +672,7 @@ describe('PageService', () => {
           createdAt: new Date(),
           updatedAt: new Date(),
           parentId: null,
-        }
+        },
       )
 
       const pages = await service.findAllForOrg(ORG_ID)

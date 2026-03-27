@@ -48,7 +48,10 @@ export function SignUpForm() {
 
       if (result.error) {
         const message = result.error.message ?? ''
-        if (message.toLowerCase().includes('already exists') || message.toLowerCase().includes('email taken')) {
+        if (
+          message.toLowerCase().includes('already exists') ||
+          message.toLowerCase().includes('email taken')
+        ) {
           form.setError('email', {
             message: 'An account with this email already exists. Sign in instead.',
           })
@@ -77,9 +80,7 @@ export function SignUpForm() {
   return (
     <Card className="w-full max-w-sm">
       <CardContent className="p-8">
-        <p className="text-[28px] font-semibold leading-[1.15] text-center mb-8">
-          Notely
-        </p>
+        <p className="text-[28px] font-semibold leading-[1.15] text-center mb-8">Notely</p>
         <h1 className="text-[20px] font-semibold leading-[1.2] text-center mb-6">
           Create your account
         </h1>
@@ -133,11 +134,7 @@ export function SignUpForm() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter your name"
-                      disabled={isLoading}
-                      {...field}
-                    />
+                    <Input placeholder="Enter your name" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -189,11 +186,7 @@ export function SignUpForm() {
                 <FormItem>
                   <FormLabel>Confirm password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      disabled={isLoading}
-                      {...field}
-                    />
+                    <Input type="password" disabled={isLoading} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -206,11 +199,7 @@ export function SignUpForm() {
               </p>
             )}
 
-            <Button
-              type="submit"
-              className="w-full mt-6"
-              disabled={isLoading}
-            >
+            <Button type="submit" className="w-full mt-6" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

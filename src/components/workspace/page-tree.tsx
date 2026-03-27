@@ -24,7 +24,7 @@ export function PageTree() {
 
   return (
     <div role="tree" aria-label="Page tree">
-      {tree.map(node => (
+      {tree.map((node) => (
         <PageTreeItem key={node.id} node={node} depth={0} mutations={mutations} />
       ))}
     </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent, type JSONContent } from '@tiptap/react'
+import { useEditor, EditorContent, type JSONContent, type Editor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import { TaskList, TaskItem } from '@tiptap/extension-list'
 import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
@@ -12,9 +12,10 @@ import { useRef, useTransition, useCallback, useEffect, useState } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { useWorkspace } from '@/components/workspace/workspace-layout'
 import { updatePageContentAction } from '@/lib/actions/page-actions'
-import { SlashCommand, SLASH_COMMANDS } from './slash-command'
+import { SlashCommand, SLASH_COMMANDS, type SlashCommandItem } from './slash-command'
 import { SlashCommandList } from './slash-command-list'
 import type { SlashCommandListRef } from './slash-command-list'
+import type { SuggestionProps, SuggestionKeyDownProps } from '@tiptap/suggestion'
 import { toast } from 'sonner'
 
 // Module-level lowlight instance — created once, shared across editor instances
@@ -33,7 +34,7 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleUpdate = useCallback(
-    ({ editor }: { editor: any }) => {
+    ({ editor }: { editor: Editor }) => {
       if (debounceRef.current) clearTimeout(debounceRef.current)
       debounceRef.current = setTimeout(() => {
         const json = editor.getJSON()
@@ -58,7 +59,7 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
       StarterKit.configure({
         codeBlock: false, // Disabled — using CodeBlockLowlight instead (Pitfall 7)
         link: {
-          isAllowedUri: (url: string, ctx: any) => {
+          isAllowedUri: (url: string, ctx: { defaultValidate: (url: string) => boolean }) => {
             return ctx.defaultValidate(url) && !/^javascript:/i.test(url)
           },
           openOnClick: false,
@@ -88,7 +89,7 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
             let root: Root | null = null
 
             return {
-              onStart: (props: any) => {
+              onStart: (props: SuggestionProps<SlashCommandItem>) => {
                 popup = document.createElement('div')
                 popup.style.position = 'fixed'
                 popup.style.zIndex = '9999'
@@ -108,14 +109,14 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
                 root.render(
                   <SlashCommandList
                     items={props.items}
-                    command={(item: any) => props.command(item)}
+                    command={(item: SlashCommandItem) => props.command(item)}
                     ref={(ref: SlashCommandListRef | null) => {
                       component = ref
                     }}
                   />,
                 )
               },
-              onUpdate: (props: any) => {
+              onUpdate: (props: SuggestionProps<SlashCommandItem>) => {
                 if (!popup || !root) return
                 const rect = props.clientRect?.()
                 if (rect) {
@@ -125,14 +126,14 @@ export function BlockEditor({ pageId, initialContent }: BlockEditorProps) {
                 root.render(
                   <SlashCommandList
                     items={props.items}
-                    command={(item: any) => props.command(item)}
+                    command={(item: SlashCommandItem) => props.command(item)}
                     ref={(ref: SlashCommandListRef | null) => {
                       component = ref
                     }}
                   />,
                 )
               },
-              onKeyDown: (props: any) => {
+              onKeyDown: (props: SuggestionKeyDownProps) => {
                 if (props.event.key === 'Escape') {
                   root?.unmount()
                   root = null

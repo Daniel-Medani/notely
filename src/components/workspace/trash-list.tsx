@@ -13,12 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip'
 import { Trash2, RotateCcw, File } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -157,7 +152,9 @@ export function TrashList({ pages, organizationId }: TrashListProps) {
       {/* Permanent delete confirmation dialog */}
       <AlertDialog
         open={deleteTarget !== null}
-        onOpenChange={(open) => { if (!open) setDeleteTarget(null) }}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null)
+        }}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
