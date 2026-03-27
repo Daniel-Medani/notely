@@ -64,11 +64,7 @@ export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
   }
 
   async function handleGoogleSignIn() {
-    await authClient.signIn.social({
-      provider: 'google',
-      callbackURL: redirectTo,
-      prompt: 'select_account',
-    })
+    await authClient.signIn.social({ provider: 'google', callbackURL: redirectTo })
   }
 
   return (
