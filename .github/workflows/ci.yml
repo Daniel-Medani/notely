@@ -25,8 +25,23 @@ jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: notely
+          POSTGRES_PASSWORD: notely
+          POSTGRES_DB: notely
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U notely"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_URL: postgresql://notely:notely@localhost:5432/notely
+      DIRECT_URL: postgresql://notely:notely@localhost:5432/notely
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,22 +50,33 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx prisma generate
+      - run: npx prisma migrate deploy
       - run: npx vitest run --reporter=dot --pool=forks
 
   e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: notely
+          POSTGRES_PASSWORD: notely
+          POSTGRES_DB: notely
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U notely"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      DATABASE_URL: postgresql://notely:notely@localhost:5432/notely
+      DIRECT_URL: postgresql://notely:notely@localhost:5432/notely
       BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
       BETTER_AUTH_URL: http://localhost:3000
       NEXT_PUBLIC_APP_URL: http://localhost:3000
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-      UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
       CI: true
     steps:
       - uses: actions/checkout@v4
@@ -60,6 +86,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx prisma generate
+      - run: npx prisma migrate deploy
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test
       - uses: actions/upload-artifact@v4

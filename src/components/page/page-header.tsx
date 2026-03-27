@@ -39,6 +39,7 @@ export function PageHeader({ pageId }: PageHeaderProps) {
   // Sync title from cache when it changes externally
   useEffect(() => {
     if (currentPage) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTitle(currentPage.title)
     }
   }, [currentPage?.title])

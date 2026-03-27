@@ -1,11 +1,11 @@
-import { Extension } from '@tiptap/core'
+import { Extension, type Editor, type Range } from '@tiptap/core'
 import Suggestion, { type SuggestionOptions } from '@tiptap/suggestion'
 
 export interface SlashCommandItem {
   title: string
   aliases: string[]
   icon: string // lucide icon name as string, resolved in SlashCommandList
-  command: (params: { editor: any; range: any }) => void
+  command: (params: { editor: Editor; range: Range }) => void
 }
 
 export const SLASH_COMMANDS: SlashCommandItem[] = [
@@ -97,7 +97,7 @@ export const SlashCommand = Extension.create({
     return {
       suggestion: {
         char: '/',
-        command: ({ editor, range, props }: { editor: any; range: any; props: any }) => {
+        command: ({ editor, range, props }: { editor: Editor; range: Range; props: SlashCommandItem }) => {
           props.command({ editor, range })
         },
       } as Partial<SuggestionOptions>,
