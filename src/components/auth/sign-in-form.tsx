@@ -47,9 +47,16 @@ export function SignInForm({ callbackUrl }: { callbackUrl?: string }) {
       })
 
       if (result.error) {
-        form.setError('root', {
-          message: 'Incorrect email or password.',
-        })
+        const code = result.error.code
+        if (code === 'EMAIL_NOT_VERIFIED') {
+          form.setError('root', {
+            message: 'Please verify your email before signing in. Check your inbox.',
+          })
+        } else {
+          form.setError('root', {
+            message: 'Incorrect email or password.',
+          })
+        }
         return
       }
 

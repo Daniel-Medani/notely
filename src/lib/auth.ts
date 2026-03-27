@@ -13,7 +13,7 @@ export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: process.env.CI !== 'true',
+    requireEmailVerification: false,
     sendResetPassword: async ({ user, url }) => {
       const { subject, html } = passwordResetEmail({ url, userName: user.name })
       await sendEmail({ to: user.email, subject, html })
@@ -28,11 +28,7 @@ export const auth = betterAuth({
     storage: 'memory',
   },
   emailVerification: {
-    sendOnSignUp: true,
-    sendVerificationEmail: async ({ user, url }) => {
-      const { subject, html } = emailVerificationEmail({ url, userName: user.name })
-      await sendEmail({ to: user.email, subject, html })
-    },
+    sendOnSignUp: false,
   },
   socialProviders: {
     google: {
