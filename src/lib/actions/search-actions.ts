@@ -6,6 +6,7 @@ import { searchQuerySchema } from '@/lib/schemas/search'
 import { SearchService } from '@/services/search-service'
 import { PrismaSearchRepository } from '@/repositories/prisma/prisma-search-repository'
 import { prisma } from '@/lib/db'
+import { checkSearchRateLimit } from '@/lib/ratelimit'
 import type { SearchResult } from '@/repositories/interfaces/ISearchRepository'
 
 const searchService = new SearchService(new PrismaSearchRepository())
@@ -13,6 +14,7 @@ const searchService = new SearchService(new PrismaSearchRepository())
 export async function searchPagesAction(input: unknown): Promise<ActionResult<SearchResult[]>> {
   try {
     const session = await verifySession()
+    await checkSearchRateLimit(session.user.id)
     const parsed = searchQuerySchema.parse(input)
     const member = await prisma.member.findFirst({
       where: { userId: session.user.id, organizationId: parsed.organizationId },
