@@ -3,7 +3,10 @@ import { Redis } from '@upstash/redis'
 import { AppError } from '@/lib/errors'
 
 function createRatelimit(prefix: string, requests: number, window: string) {
-  if (!process.env.UPSTASH_REDIS_REST_URL?.startsWith('https') || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (
+    !process.env.UPSTASH_REDIS_REST_URL?.startsWith('https') ||
+    !process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
     return null
   }
   return new Ratelimit({
