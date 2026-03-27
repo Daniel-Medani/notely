@@ -31,6 +31,14 @@ vi.mock('@/repositories/prisma/prisma-search-repository', () => ({
   }),
 }))
 
+const { mockCheckSearchRateLimit } = vi.hoisted(() => ({
+  mockCheckSearchRateLimit: vi.fn(),
+}))
+
+vi.mock('@/lib/ratelimit', () => ({
+  checkSearchRateLimit: mockCheckSearchRateLimit,
+}))
+
 import { searchPagesAction } from './search-actions'
 import { verifySession } from '@/lib/dal'
 import { prisma } from '@/lib/db'
@@ -60,6 +68,7 @@ const VALID_MEMBER = {
 
 beforeEach(() => {
   vi.clearAllMocks()
+  mockCheckSearchRateLimit.mockResolvedValue(undefined)
 })
 
 describe('searchPagesAction', () => {
@@ -120,5 +129,20 @@ describe('searchPagesAction', () => {
     await searchPagesAction({ query: 'search term', organizationId: 'org-1' })
 
     expect(mockSearch).toHaveBeenCalledWith('search term', 'org-1')
+  })
+
+  it('returns rate limited error when checkSearchRateLimit throws', async () => {
+    const { AppError } = await import('@/lib/errors')
+    mockVerifySession.mockResolvedValue(VALID_SESSION as never)
+    mockCheckSearchRateLimit.mockRejectedValue(
+      new AppError('Too many requests. Please wait a moment and try again.', 'RATE_LIMITED', 429),
+    )
+
+    const result = await searchPagesAction({ query: 'hello world', organizationId: 'org-1' })
+
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(result.code).toBe('RATE_LIMITED')
+    }
   })
 })

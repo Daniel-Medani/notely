@@ -143,6 +143,13 @@ Recent decisions affecting current work:
 
 None yet.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260327-ia9 | Add comprehensive security hardening: rate limit search and auth, add security headers | 2026-03-27 | 980ea49 | [260327-ia9-add-comprehensive-security-hardening-rat](./quick/260327-ia9-add-comprehensive-security-hardening-rat/) |
+| 260327-jjh | Set up full Resend email layer: email service abstraction, branded HTML templates, Better Auth email flows | 2026-03-27 | 994d17d | [260327-jjh-set-up-full-resend-email-layer](./quick/260327-jjh-set-up-full-resend-email-layer/) |
+
 ### Blockers/Concerns
 
 - [Phase 3]: TipTap v3 DragHandle and Slash Commands extension API surface needs verification before implementation — consider `/gsd:research-phase` before Phase 3 planning
@@ -150,6 +157,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T23:29:23.415Z
+Last activity: 2026-03-27 - Completed quick task 260327-jjh: Set up full Resend email layer
 Stopped at: Completed 07-02-PLAN.md
 Resume file: None

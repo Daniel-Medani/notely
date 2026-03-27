@@ -3,7 +3,10 @@ import { Redis } from '@upstash/redis'
 import { AppError } from '@/lib/errors'
 
 function createRatelimit(prefix: string, requests: number, window: string) {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (
+    !process.env.UPSTASH_REDIS_REST_URL?.startsWith('https') ||
+    !process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
     return null
   }
   return new Ratelimit({
@@ -16,6 +19,9 @@ function createRatelimit(prefix: string, requests: number, window: string) {
 // 30 write operations per user per 60 seconds
 export const writeRatelimit = createRatelimit('write', 30, '60 s')
 
+// 60 search reads per user per 60 seconds (higher than writes since search is read-only)
+export const searchRatelimit = createRatelimit('search', 60, '60 s')
+
 /**
  * Checks rate limit for the given identifier.
  * No-ops when Upstash is not configured (local dev, test).
@@ -24,6 +30,23 @@ export const writeRatelimit = createRatelimit('write', 30, '60 s')
 export async function checkRateLimit(identifier: string): Promise<void> {
   if (!writeRatelimit) return
   const { success } = await writeRatelimit.limit(identifier)
+  if (!success) {
+    throw new AppError(
+      'Too many requests. Please wait a moment and try again.',
+      'RATE_LIMITED',
+      429,
+    )
+  }
+}
+
+/**
+ * Checks search rate limit for the given identifier.
+ * No-ops when Upstash is not configured (local dev, test).
+ * Throws AppError('RATE_LIMITED', 429) when limit exceeded.
+ */
+export async function checkSearchRateLimit(identifier: string): Promise<void> {
+  if (!searchRatelimit) return
+  const { success } = await searchRatelimit.limit(identifier)
   if (!success) {
     throw new AppError(
       'Too many requests. Please wait a moment and try again.',
