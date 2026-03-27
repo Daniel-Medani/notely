@@ -3,16 +3,36 @@ import { betterAuth } from 'better-auth'
 import { organization } from 'better-auth/plugins'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { prisma } from './db'
+import { sendEmail } from './email/send'
+import { invitationEmail } from './email/templates/invitation'
+import { emailVerificationEmail } from './email/templates/email-verification'
+import { passwordResetEmail } from './email/templates/password-reset'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
   baseURL: process.env.BETTER_AUTH_URL,
-  emailAndPassword: { enabled: true },
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      const { subject, html } = passwordResetEmail({ url, userName: user.name })
+      await sendEmail({ to: user.email, subject, html })
+    },
+    resetPasswordTokenExpiresIn: 3600,
+    revokeSessionsOnPasswordReset: true,
+  },
   rateLimit: {
     enabled: true,
     window: 10,
     max: 10,
     storage: 'memory',
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      const { subject, html } = emailVerificationEmail({ url, userName: user.name })
+      await sendEmail({ to: user.email, subject, html })
+    },
   },
   socialProviders: {
     google: {
@@ -25,23 +45,12 @@ export const auth = betterAuth({
       allowUserToCreateOrganization: true,
       creatorRole: 'admin',
       sendInvitationEmail: async (data) => {
-        if (!process.env.RESEND_API_KEY) {
-          console.warn('RESEND_API_KEY not set - invitation email skipped')
-          return
-        }
-        const { Resend } = await import('resend')
-        const resend = new Resend(process.env.RESEND_API_KEY)
         const acceptUrl = `${process.env.BETTER_AUTH_URL}/invite/${data.invitation.id}`
-        await resend.emails.send({
-          from: 'Notely <noreply@notely.app>',
-          to: data.invitation.email,
-          subject: `You've been invited to join ${data.organization.name} on Notely`,
-          html: `
-            <p>You've been invited to join <strong>${data.organization.name}</strong> on Notely.</p>
-            <p><a href="${acceptUrl}">Accept Invitation</a></p>
-            <p>This link will expire in 48 hours.</p>
-          `,
+        const { subject, html } = invitationEmail({
+          organizationName: data.organization.name,
+          acceptUrl,
         })
+        await sendEmail({ to: data.invitation.email, subject, html })
       },
     }),
   ],
