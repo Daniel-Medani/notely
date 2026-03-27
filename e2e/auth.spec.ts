@@ -2,27 +2,38 @@ import { test, expect } from '@playwright/test'
 
 // Test: unauthenticated redirect — no storageState
 test('unauthenticated user is redirected to login', async ({ browser }) => {
-  const context = await browser.newContext() // fresh context, no storageState
+  const context = await browser.newContext({ storageState: { cookies: [], origins: [] } })
   const page = await context.newPage()
 
-  await page.goto('/someorg')
-  await expect(page).toHaveURL(/\/login/)
+  await page.goto('/dashboard')
+  await expect(page).toHaveURL(/\/login/, { timeout: 10000 })
 
   await context.close()
 })
 
-// The remaining tests use the shared storageState (set via playwright.config.ts projects)
-test.use({ storageState: 'e2e/.auth/user.json' })
+test('root redirects unauthenticated user to login', async ({ browser }) => {
+  const context = await browser.newContext({ storageState: { cookies: [], origins: [] } })
+  const page = await context.newPage()
 
-test('authenticated user lands in workspace', async ({ page }) => {
   await page.goto('/')
-  // After redirect to workspace, sidebar should be visible with "Pages" label
-  await expect(page.getByText('Pages')).toBeVisible({ timeout: 10000 })
+  await expect(page).toHaveURL(/\/login/, { timeout: 10000 })
+
+  await context.close()
+})
+
+test('root redirects authenticated user to workspace', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByText('Pages', { exact: true })).toBeVisible({ timeout: 10000 })
+})
+
+test('authenticated user lands in workspace via dashboard', async ({ page }) => {
+  await page.goto('/dashboard')
+  await expect(page.getByText('Pages', { exact: true })).toBeVisible({ timeout: 10000 })
 })
 
 test('user can sign in with valid credentials', async ({ browser }) => {
   // Use a fresh context (no storageState) to test sign-in flow
-  const context = await browser.newContext()
+  const context = await browser.newContext({ storageState: { cookies: [], origins: [] } })
   const page = await context.newPage()
 
   await page.goto('/login')
