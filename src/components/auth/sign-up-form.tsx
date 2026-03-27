@@ -74,7 +74,11 @@ export function SignUpForm() {
   }
 
   async function handleGoogleSignIn() {
-    await authClient.signIn.social({ provider: 'google', callbackURL: '/dashboard' })
+    await authClient.signIn.social({
+      provider: 'google',
+      callbackURL: '/dashboard',
+      prompt: 'select_account',
+    })
   }
 
   return (
