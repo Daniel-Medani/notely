@@ -135,7 +135,7 @@ describe('searchPagesAction', () => {
     const { AppError } = await import('@/lib/errors')
     mockVerifySession.mockResolvedValue(VALID_SESSION as never)
     mockCheckSearchRateLimit.mockRejectedValue(
-      new AppError('Too many requests. Please wait a moment and try again.', 'RATE_LIMITED', 429)
+      new AppError('Too many requests. Please wait a moment and try again.', 'RATE_LIMITED', 429),
     )
 
     const result = await searchPagesAction({ query: 'hello world', organizationId: 'org-1' })

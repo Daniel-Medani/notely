@@ -1,12 +1,9 @@
 import { baseLayout } from './base'
 
-export function emailVerificationEmail({
-  url,
-  userName,
-}: {
-  url: string
-  userName: string
-}): { subject: string; html: string } {
+export function emailVerificationEmail({ url, userName }: { url: string; userName: string }): {
+  subject: string
+  html: string
+} {
   const subject = 'Verify your email address on Notely'
   const content = `
     <h1 style="margin:0 0 16px;font-size:24px;font-weight:700;color:#171717;letter-spacing:-0.5px;">Verify your email</h1>
