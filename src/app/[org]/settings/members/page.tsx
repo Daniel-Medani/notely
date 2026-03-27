@@ -7,11 +7,7 @@ import { MembersList } from '@/components/workspace/members-list'
 import { InviteMemberForm } from '@/components/workspace/invite-member-form'
 import { Separator } from '@/components/ui/separator'
 
-export default async function MembersPage({
-  params,
-}: {
-  params: Promise<{ org: string }>
-}) {
+export default async function MembersPage({ params }: { params: Promise<{ org: string }> }) {
   const session = await verifySession()
   const { org } = await params
 

@@ -10,15 +10,18 @@ export class PageService {
     while (queue.length > 0) {
       const current = queue.shift()!
       result.push(current)
-      const children = allPages.filter(p => p.parentId === current)
-      queue.push(...children.map(c => c.id))
+      const children = allPages.filter((p) => p.parentId === current)
+      queue.push(...children.map((c) => c.id))
     }
     return result
   }
 
-  async createPage(parentId: string | null | undefined, organizationId: string): Promise<PageRecord> {
+  async createPage(
+    parentId: string | null | undefined,
+    organizationId: string,
+  ): Promise<PageRecord> {
     const allPages = await this.repo.findAllForOrg(organizationId)
-    const siblings = allPages.filter(p => p.parentId === (parentId ?? null))
+    const siblings = allPages.filter((p) => p.parentId === (parentId ?? null))
     const maxOrder = siblings.reduce((max, p) => Math.max(max, p.order), 0)
     return this.repo.create({ parentId: parentId ?? null, order: maxOrder + 1.0 }, organizationId)
   }
@@ -54,7 +57,10 @@ export class PageService {
     }
 
     const allPages = await this.repo.findAll(organizationId)
-    const descendantIds = this.collectDescendantIds(id, allPages.filter(p => p.isDeleted))
+    const descendantIds = this.collectDescendantIds(
+      id,
+      allPages.filter((p) => p.isDeleted),
+    )
     await this.repo.restoreMany(descendantIds, organizationId, newParentId, id)
   }
 

@@ -43,9 +43,7 @@ async function assertAdminMembership(userId: string, organizationId: string): Pr
  * Creates a new organization with the authenticated user as the admin.
  * Returns the slug of the created organization.
  */
-export async function createOrgAction(
-  input: unknown,
-): Promise<ActionResult<{ slug: string }>> {
+export async function createOrgAction(input: unknown): Promise<ActionResult<{ slug: string }>> {
   try {
     const session = await verifySession()
     await checkRateLimit(session.user.id)
@@ -171,9 +169,7 @@ export async function acceptInvitationAction(
  * Gets the details of a pending invitation.
  * Does not require authentication (used on the /invite public page).
  */
-export async function getInvitationAction(
-  invitationId: string,
-): Promise<
+export async function getInvitationAction(invitationId: string): Promise<
   ActionResult<{
     id: string
     organizationName: string

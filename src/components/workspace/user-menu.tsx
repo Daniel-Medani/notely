@@ -29,12 +29,7 @@ export function UserMenu({ userName, userImage }: UserMenuProps) {
         )}
         <span className="truncate text-sm">{userName}</span>
       </div>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={handleSignOut}
-        className="text-muted-foreground"
-      >
+      <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-muted-foreground">
         <LogOut className="h-4 w-4 mr-1" />
         Sign out
       </Button>

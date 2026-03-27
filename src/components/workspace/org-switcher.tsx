@@ -4,11 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Building2, Check, ChevronDown, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 import { authClient } from '@/lib/auth-client'
 import { useWorkspace } from './workspace-layout'
@@ -66,9 +62,7 @@ export function OrgSwitcher({ currentOrgName, orgs }: OrgSwitcherProps) {
             >
               <Building2 className="h-6 w-6 text-muted-foreground shrink-0" />
               <span className="text-sm font-semibold truncate">{org.name}</span>
-              {org.id === organizationId && (
-                <Check className="ml-auto h-4 w-4 text-primary" />
-              )}
+              {org.id === organizationId && <Check className="ml-auto h-4 w-4 text-primary" />}
             </button>
           ))}
           <Separator className="my-1" />

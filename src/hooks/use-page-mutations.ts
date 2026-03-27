@@ -28,7 +28,7 @@ export function usePageMutations() {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
       const allPages = previous ?? []
-      const siblings = allPages.filter(p => p.parentId === (input.parentId ?? null))
+      const siblings = allPages.filter((p) => p.parentId === (input.parentId ?? null))
       const maxOrder = siblings.reduce((max, p) => Math.max(max, p.order), 0)
       const optimistic: PageRecord = {
         id: `temp-${Date.now()}`,
@@ -42,7 +42,7 @@ export function usePageMutations() {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      queryClient.setQueryData<PageRecord[]>(queryKey, old => [...(old ?? []), optimistic])
+      queryClient.setQueryData<PageRecord[]>(queryKey, (old) => [...(old ?? []), optimistic])
       return { previous }
     },
     onError: (_err, _input, context) => {
@@ -63,8 +63,8 @@ export function usePageMutations() {
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
-      queryClient.setQueryData<PageRecord[]>(queryKey, old =>
-        (old ?? []).map(p => p.id === input.id ? { ...p, title: input.title } : p)
+      queryClient.setQueryData<PageRecord[]>(queryKey, (old) =>
+        (old ?? []).map((p) => (p.id === input.id ? { ...p, title: input.title } : p)),
       )
       return { previous }
     },
@@ -86,8 +86,8 @@ export function usePageMutations() {
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
-      queryClient.setQueryData<PageRecord[]>(queryKey, old =>
-        (old ?? []).filter(p => p.id !== input.id)
+      queryClient.setQueryData<PageRecord[]>(queryKey, (old) =>
+        (old ?? []).filter((p) => p.id !== input.id),
       )
       return { previous }
     },
@@ -109,8 +109,8 @@ export function usePageMutations() {
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
-      queryClient.setQueryData<PageRecord[]>(queryKey, old =>
-        (old ?? []).map(p => p.id === input.id ? { ...p, parentId: input.parentId } : p)
+      queryClient.setQueryData<PageRecord[]>(queryKey, (old) =>
+        (old ?? []).map((p) => (p.id === input.id ? { ...p, parentId: input.parentId } : p)),
       )
       return { previous }
     },
@@ -132,8 +132,8 @@ export function usePageMutations() {
     onMutate: async (input) => {
       await queryClient.cancelQueries({ queryKey })
       const previous = queryClient.getQueryData<PageRecord[]>(queryKey)
-      queryClient.setQueryData<PageRecord[]>(queryKey, old =>
-        (old ?? []).map(p => p.id === input.id ? { ...p, emoji: input.emoji } : p)
+      queryClient.setQueryData<PageRecord[]>(queryKey, (old) =>
+        (old ?? []).map((p) => (p.id === input.id ? { ...p, emoji: input.emoji } : p)),
       )
       return { previous }
     },

@@ -1,10 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  orgCreateSchema,
-  orgInviteSchema,
-  orgMemberRoleSchema,
-  orgRemoveMemberSchema,
-} from './org'
+import { orgCreateSchema, orgInviteSchema, orgMemberRoleSchema, orgRemoveMemberSchema } from './org'
 
 describe('orgCreateSchema', () => {
   it('accepts valid name', () => {

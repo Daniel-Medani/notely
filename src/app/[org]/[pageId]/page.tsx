@@ -28,15 +28,10 @@ export default async function PageView({
     <div className="h-full">
       <PageHeader pageId={pageId} />
       {page ? (
-        <BlockEditor
-          pageId={pageId}
-          initialContent={(page.content as JSONContent) ?? null}
-        />
+        <BlockEditor pageId={pageId} initialContent={(page.content as JSONContent) ?? null} />
       ) : (
         <div className="px-16 py-8">
-          <p className="text-sm text-muted-foreground">
-            This page could not be loaded.
-          </p>
+          <p className="text-sm text-muted-foreground">This page could not be loaded.</p>
         </div>
       )}
     </div>

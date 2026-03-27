@@ -103,10 +103,7 @@ export function PageHeader({ pageId }: PageHeaderProps) {
 
       {/* Emoji + Title */}
       <div className="mt-4 flex items-center gap-2">
-        <EmojiPickerPopover
-          emoji={currentPage.emoji}
-          onEmojiSelect={handleEmojiSelect}
-        />
+        <EmojiPickerPopover emoji={currentPage.emoji} onEmojiSelect={handleEmojiSelect} />
         <input
           ref={titleRef}
           type="text"
