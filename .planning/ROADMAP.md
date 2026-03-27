@@ -152,7 +152,7 @@ Plans:
 - [x] 07-01-PLAN.md — Dark mode toggle: ThemeToggle component + sidebar integration
 - [x] 07-02-PLAN.md — Rate limiting: Upstash ratelimit module + apply to all mutation Server Actions
 - [x] 07-03-PLAN.md — Vitest cross-tenant isolation tests for PrismaPageRepository
-- [ ] 07-04-PLAN.md — Playwright E2E test suite + GitHub Actions e2e job + CI hardening
+- [x] 07-04-PLAN.md — Playwright E2E test suite + GitHub Actions e2e job + CI hardening
 
 **UI hint**: yes
 
